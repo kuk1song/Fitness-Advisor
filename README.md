@@ -26,6 +26,7 @@ Make sure you have the following installed:
 
    ```bash
    git clone https://github.com/kuk1song/fitness-advisor.git
+   
    cd fitness-advisor
 2. Install dependencies:
 
