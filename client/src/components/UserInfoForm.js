@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function UserInfoForm() {
   const [userData, setUserData] = useState({
@@ -37,6 +38,7 @@ function UserInfoForm() {
       </select>
       <input type="text" name="goal" onChange={handleChange} placeholder="Fitness Goal" />
       <button type="submit">Submit</button>
+      <Link to="/" className="homepage-button">Homepage</Link>
     </form>
   );
 }

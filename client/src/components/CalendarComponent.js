@@ -2,6 +2,7 @@ import React from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { Link } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -13,7 +14,8 @@ function CalendarComponent() {
 
   return (
     <div>
-      <h2>Fitness Calendar</h2>
+    <Link to="/" className="homepage-button">Homepage</Link>
+      <h2>My Fitness Calendar</h2>
       <Calendar
         localizer={localizer}
         events={events}
@@ -22,6 +24,7 @@ function CalendarComponent() {
         defaultView="month"
       />
     </div>
+    
   );
 }
 

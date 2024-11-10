@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.homepage-button {
+  position: fixed;      
+  bottom: 20px;        
+  right: 20px;          
+  padding: 10px 20px;   
+  background-color: #4CAF50; 
+  color: white;        
+  border: none;        
+  border-radius: 5px;  
+  cursor: pointer;      
+  font-size: 16px;      
+  text-decoration: none; 
+}
+
+.homepage-button:hover {
+  background-color: #45a049; 
+}
+
