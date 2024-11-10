@@ -9,33 +9,33 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 function App() {
   return (
 
-    // <Router>
-    //   <div>
-    //     <nav>
-    //       <ul>
-    //         <li>
-    //           <Link to="/">Fitness Advisor</Link>
-    //         </li>
-    //         <li>
-    //           <Link to="/calendar">My Calendar</Link>
-    //         </li>
-    //       </ul>
-    //     </nav>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Fitness Advisor</Link>
+            </li>
+            <li>
+              <Link to="/calendar">My Calendar</Link>
+            </li>
+          </ul>
+        </nav>
 
-    //     <Routes>
-    //       <Route path="/" element={ <UserInfoForm />} />
-    //       <Route path="/calendar" element={<CalendarComponent />} />
-    //     </Routes>
-    //   </div>
-    // </Router>
+        <Routes>
+          <Route path="/" element={ <UserInfoForm />} />
+          <Route path="/calendar" element={<CalendarComponent />} />
+        </Routes>
+      </div>
+    </Router>
 
-    <div className="App">
+    // <div className="App">
       
-      <h1>Fitness Advisor</h1>
-      <UserInfoForm />
+    //   <h1>Fitness Advisor</h1>
+    //   <UserInfoForm />
 
-      <CalendarComponent />
-    </div>
+    //   <CalendarComponent />
+    // </div>
   
   )
 }
