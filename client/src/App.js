@@ -7,6 +7,7 @@ import Homepage from './components/Homepage';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Dashboard from './components/Dashboard';
 import { AuthService } from './services/AuthService';
 // import './styles/ReactCalendar.css';
@@ -24,6 +25,8 @@ function App() {
           <Route path="/calendar" element={<CalendarComponent />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          
           <Route
               path="/dashboard"
               element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}

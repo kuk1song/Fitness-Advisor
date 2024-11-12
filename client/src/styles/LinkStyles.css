@@ -1,0 +1,35 @@
+.link-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    gap: 20px;
+  }
+  
+  /* My Data */
+  .data-button {
+    background-color: #4a90e2; 
+  }
+  
+  .data-button:hover {
+    background-color: #357abd; 
+  }
+  
+  /* My Calendar */
+  .calendar-button {
+    background-color: #7ed321; 
+  }
+  
+  .calendar-button:hover {
+    background-color: #5a9e1a; 
+  }
