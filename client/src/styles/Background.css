@@ -1,0 +1,32 @@
+body {
+    background-color: #222;
+}
+
+.bg-homepage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 110vh;
+    z-index: -100;
+    opacity: 0.6;
+
+    background-image: url("../../public/background-1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    animation-name: bg;
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes bg {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: -100px;
+    }
+}
