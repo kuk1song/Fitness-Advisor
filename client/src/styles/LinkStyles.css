@@ -1,0 +1,63 @@
+.link-button {
+  display: inline-block;
+  padding: 30px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-rows: 20px 70px 25px;
+  gap: 20px;
+
+  position: relative;
+  top: 0;
+  transition: 0.25s;
+}
+
+.link-button > p {
+  align-self: start;
+}
+
+.link-button > * {
+  height: min-content;
+}
+
+.link-button:after {
+  content: ' →';
+  font-size: 40px;
+  justify-self: end;
+  align-self: end;
+}
+
+.link-button:hover {
+  top: 10px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 20px;
+}
+
+/* My Data */
+.data-button {
+  background-color: #4a90e2;
+}
+
+.data-button:hover {
+  background-color: #357abd;
+}
+
+/* My Calendar */
+.calendar-button {
+  background-color: #7ed321;
+}
+
+.calendar-button:hover {
+  background-color: #5a9e1a;
+}

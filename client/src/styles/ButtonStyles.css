@@ -1,0 +1,39 @@
+.logout-button {
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  bottom: 20px;
+
+  margin: 30px auto;
+  font-size: 18px;
+  background-color: #e74c3c;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  color: white;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  border: 2px solid black;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  width: 180px;
+  padding: 12px 20px;
+
+  /* Centering Text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.logout-button::after {
+  content: ' →';
+  font-size: 20px;
+  margin-left: 8px;
+}
+
+.logout-button:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+  background-color: #c0392b;
+}
