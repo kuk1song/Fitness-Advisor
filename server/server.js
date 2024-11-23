@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth.js';
+import healthRoutes from './routes/health.js';
 
 dotenv.config();
 
@@ -16,6 +18,10 @@ mongoose.connect(`${process.env.MONGO_URI}`)
 .then(() => console.log("Connected to DB"))
 .catch(console.error);
 
+// Routes
+app.use('/auth', authRoutes);
+app.use('/api', healthRoutes);
+
 // Start Server
 const PORT = process.env.PORT || 5000; // Use the PORT environment variable if it's defined, otherwise default to port 3000
 
@@ -29,16 +35,6 @@ app.listen(PORT, () => {
 
 
 
-
-
-
-
-// mongoose.connect(`${process.env.MONGO_URI}`)
-//   .then(() => console.log("Connected to DB"))
-//   .catch(err => {
-//     console.error("Error connecting to the database:", err);
-//     process.exit(1);  // exit the process if we can't connect to the database
-//   });
 
 
 
