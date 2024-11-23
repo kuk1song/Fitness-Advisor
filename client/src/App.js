@@ -4,7 +4,7 @@ import React from 'react';
 import UserInfoForm from './components/UserInfoForm';
 import CalendarComponent from './components/CalendarComponent';
 import Homepage from './components/Homepage';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
