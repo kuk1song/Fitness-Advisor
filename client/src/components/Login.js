@@ -5,7 +5,8 @@ import InputWithDynamicColor from '../components/InputWithDynamicColor';
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  // const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,16 +15,19 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const response = await AuthService.login(formData.email, formData.password);
-    if (response && response.token) {
-      // token is stored in localStorage
-      localStorage.setItem('authToken', response.token);
-  
-      // redirect to the dashboard
-      window.location.href = '/home';
-    } else {
-      console.error('Invalid credentials');
+    
+    try {
+      const response = await AuthService.login(formData);
+      if (response && response.token) {
+        // login successful, save the token in local storage
+        localStorage.setItem('authToken', response.token);
+        navigate('/');
+      } else if (response && response.message) {
+        setError(response.message);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Password or email is incorrect, please try it again.');
     }
   };
 
@@ -50,11 +54,12 @@ function Login() {
           style={{ marginBottom: '10px', padding: '8px', width: '250px' }}
 
         />
-        <button type="submit"  style={{ padding: '10px 20px', width: '150px' }}>Sign In</button>
+        <button type="submit" style={{ padding: '10px 20px', width: '150px' }}>Sign In</button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
       <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
     </div>
   );
 }
 
-export default Login;
+export default Login

@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/auth'; // backend server
+const BASE_URL = 'http://localhost:5000/auth'; // Define the base URL for the API
 
 export const AuthService = {
   register: async (userData) => {

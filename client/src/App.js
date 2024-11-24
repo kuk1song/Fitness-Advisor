@@ -17,7 +17,7 @@ import './styles/Global.css';
 // import './styles/ReactCalendar.css';
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
   
   // const isAuthenticated = AuthService.isAuthenticated();
 

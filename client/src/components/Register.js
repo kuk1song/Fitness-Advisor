@@ -22,28 +22,24 @@ function Register() {
     try {
         // call the register method from the AuthService
         const response = await AuthService.register(formData);
-        
         // check if the response is successful
         if (response && response.message === 'User registered successfully') {
-          
             // show a success message and redirect to the login page
             localStorage.setItem('registrationSuccess', 'Registration successful, please log in!');
-            navigate('/login'); 
-          
+            navigate('/login');    
         } else {
             console.error('Unexpected response format:', response);
         }
     } catch (error) {
           // handle the error
           console.error('Registration error:', error);
-          setError('Registration failed. Please try again.');
+          setError('Registration failed. Please try it again.');
     }
   };
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h2>Register</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>} {/* display error message */}
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <InputWithDynamicColor
           type="email" 
@@ -73,6 +69,7 @@ function Register() {
           style={{ marginBottom: '10px', padding: '8px', width: '250px' }}
         />
         <button type="submit" style={{ padding: '10px 20px', width: '150px' }}>Sign Up</button>
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* display error message */}
       </form>
       <p>Already have an account? <Link to="/login">Sign In</Link></p>
     </div>
