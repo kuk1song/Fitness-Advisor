@@ -5,19 +5,19 @@ import UserInfoForm from './components/UserInfoForm';
 import CalendarComponent from './components/CalendarComponent';
 import { useEffect, useState } from 'react';
 import Homepage from './components/Homepage';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Dashboard from './components/Dashboard';
 import AuthGuard from './components/AuthGuard'; 
-import { AuthService } from './services/AuthService';
+// import { AuthService } from './services/AuthService';
 // import './styles/ReactCalendar.css';
 
 const App = () => {
   const [user, setUser] = useState(null);
   
-  const isAuthenticated = AuthService.isAuthenticated();
+  // const isAuthenticated = AuthService.isAuthenticated();
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
@@ -52,39 +52,7 @@ const App = () => {
         </Routes>
       </div>
     </Router>
-
-    // <Router>
-    //   <Routes>
-    //     <Route path="/register" element={<Register />} />
-    //     <Route path="/login" element={<Login />} />
-    //     <Route
-    //       path="/dashboard"
-    //       element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
-    //     />
-    //   </Routes>
-    // </Router>
    );
 }
-
-// function Homepage() {
-//   return (
-//     <div>
-//       <h1>Welcome to the Fitness Advisor !</h1>
-//       <nav>
-//           <ul>
-//             <li>
-//                 <Link to="/user">My data</Link>
-//             </li>
-//             <li>
-//                 <Link to="/calendar">My Calendar</Link>
-//             </li>
-//             {/* <li>
-//                 <Link to="/">Homepage</Link>
-//             </li> */}
-//           </ul>
-//         </nav>
-//     </div>
-//   );
-// }
 
 export default App;
