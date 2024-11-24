@@ -1,20 +1,60 @@
+const BASE_URL = 'http://localhost:5000/auth'; // backend server
 
 export const AuthService = {
-    register: (userData) => {
-      localStorage.setItem("user", JSON.stringify(userData));
-    },
-    login: (email, password) => {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user && user.email === email && user.password === password) {
-        localStorage.setItem("isAuthenticated", "true");
-        return true;
+  register: async (userData) => {
+    try {
+      const response = await fetch(`${BASE_URL}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
       }
-      return false;
-    },
-    logout: () => {
-      localStorage.removeItem("isAuthenticated");
-    },
-    isAuthenticated: () => {
-      return localStorage.getItem("isAuthenticated") === "true";
-    },
-  };
+
+      const data = await response.json();
+      console.log('User registered successfully:', data);
+      return data; // Return success message or user data
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      throw error;
+    }
+  },
+
+  login: async (credentials) => {
+    try {
+      const response = await fetch(`${BASE_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('token', data.token); // Store token for authentication
+      return data;
+    } catch (error) {
+      console.error('Login error:', error.message);
+      throw error;
+    }
+  },
+
+  logout: () => {
+    localStorage.removeItem('token'); // Remove token on logout
+    console.log('User logged out');
+  },
+
+  isAuthenticated: () => {
+    return !!localStorage.getItem('token'); // Check if token exists
+  },
+};
