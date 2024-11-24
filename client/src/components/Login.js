@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '../services/AuthService';
+import InputWithDynamicColor from '../components/InputWithDynamicColor';
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (AuthService.login(formData.email, formData.password)) {
-      navigate("/");
+  
+    const response = await AuthService.login(formData.email, formData.password);
+    if (response && response.token) {
+      // token is stored in localStorage
+      localStorage.setItem('authToken', response.token);
+  
+      // redirect to the dashboard
+      window.location.href = '/home';
     } else {
-      alert("Invalid credentials");
+      console.error('Invalid credentials');
     }
   };
 
@@ -24,7 +31,7 @@ function Login() {
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h2>Login to Your Account</h2>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <input 
+        <InputWithDynamicColor 
           type="email" 
           name="email" 
           placeholder="Email" 
@@ -33,7 +40,7 @@ function Login() {
           required 
           style={{ marginBottom: '10px', padding: '8px', width: '250px' }}
         />
-        <input 
+        <InputWithDynamicColor
           type="password" 
           name="password" 
           placeholder="Password" 

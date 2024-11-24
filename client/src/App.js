@@ -3,17 +3,30 @@ import './App.css';
 import React from 'react';
 import UserInfoForm from './components/UserInfoForm';
 import CalendarComponent from './components/CalendarComponent';
+import { useEffect, useState } from 'react';
 import Homepage from './components/Homepage';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Dashboard from './components/Dashboard';
+import AuthGuard from './components/AuthGuard'; 
 import { AuthService } from './services/AuthService';
 // import './styles/ReactCalendar.css';
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState(null);
+  
   const isAuthenticated = AuthService.isAuthenticated();
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      // decode JWT to get user information
+      const userInfo = JSON.parse(localStorage.getItem('user'));
+      setUser(userInfo);
+    } 
+  }, []);
 
   return (
     /* router setup */
@@ -29,7 +42,11 @@ function App() {
           
           <Route
               path="/dashboard"
-              element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+              element={
+                <AuthGuard>
+                    <Dashboard />
+                </AuthGuard>
+            }
           />
           
         </Routes>
