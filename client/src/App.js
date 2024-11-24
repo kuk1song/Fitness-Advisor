@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Dashboard from './components/Dashboard';
 import { AuthService } from './services/AuthService';
+import './styles/Global.css';
 // import './styles/ReactCalendar.css';
 
 function App() {
