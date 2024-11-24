@@ -1,0 +1,22 @@
+div.custom-select {
+    position: relative;
+}
+
+div.custom-select > div.list-select {
+    padding: 10px 20px;
+    background-color: #22222255;
+    
+    margin-top: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+div.custom-select > div.list-select > *{
+    width: 100%;
+}

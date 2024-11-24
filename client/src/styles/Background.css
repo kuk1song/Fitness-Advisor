@@ -2,7 +2,7 @@ body {
     background-color: #222;
 }
 
-.bg-homepage {
+.bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,12 +11,25 @@ body {
     z-index: -100;
     opacity: 0.6;
 
-    background-image: url("../../public/images/background-1.png");
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.bg-homepage {
+    background-image: url("../../public/images/background-1.png");
     
     animation-name: bg;
     animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.bg-dataform {
+    background-image: url("../../public/images/background-2.png");
+
+    animation-name: bg;
+    animation-duration: 10s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
     animation-direction: alternate;

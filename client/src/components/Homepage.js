@@ -19,7 +19,7 @@ function Homepage() {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <div className="bg-homepage"></div>
+      <div className="bg bg-homepage"></div>
       <Suspense fallback={<Loading />}>
         <h1 className='title'>Welcome to the Fitness Advisor !</h1>
         <GridButtons />

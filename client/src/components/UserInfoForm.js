@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import CustomSelect from './CustomSelect';
+
+import '../styles/DataForm.css';
+import '../styles/Background.css';
 
 function UserInfoForm() {
   const [userData, setUserData] = useState({
@@ -12,8 +16,32 @@ function UserInfoForm() {
     goal: '',
   });
 
+  const [step, setStep] = useState(0);
+
+  //? Used for auto focus when go to next
+  let input_fields = useRef(document.getElementsByTagName("input"));
+
+  function back_step() {
+    setStep(step - 1);
+  }
+
+  const next_step = useCallback(() => {
+    if(Object.values(userData).at(step) === '') {
+      return;
+    }
+    if(step < 5) {
+      setTimeout(() => {
+        input_fields.current[step+1].focus();
+      }, 10);
+    }
+    setStep(step + 1);
+  }, [input_fields, step, userData]);
+
+
   // Load user data from local storage
   useEffect(() => {
+    console.log(input_fields);
+    
     const loggedInEmail = localStorage.getItem('email');
     console.log(loggedInEmail);
     if (loggedInEmail) {
@@ -23,6 +51,12 @@ function UserInfoForm() {
       }));
     }
   }, []);
+  
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Enter") next_step();
+    });
+  }, [next_step]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,27 +66,35 @@ function UserInfoForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userData);
-
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
-      <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" />
-      <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" readOnly />
-      <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight" />
-      <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height" />
-      <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" />
-      <select name="dietType" value={userData.dietType} onChange={handleChange}>
-        <option value="">Select Diet Type</option>
-        <option value="vegetarian">Vegetarian</option>
-        <option value="vegan">Vegan</option>
-        <option value="keto">Keto</option>
-        <option value="other">Other</option>
-      </select>
-      <input type="text" name="goal" value={userData.goal} onChange={handleChange} placeholder="Fitness Goal" />
-      <button type="submit">Submit</button>
-      <Link to="/" className="homepage-button">Homepage</Link>
-    </form>
+    <>
+      <div className="bg bg-dataform"></div>
+      <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
+        <h1 className='question'>What is your {Object.keys(userData).at(step)}?</h1>
+        <div className="input-field-container">
+          <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
+          <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} />
+          <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight" style={{visibility: step===2?"visible":"collapse"}}  />
+          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height" style={{visibility: step===3?"visible":"collapse"}}  />
+          <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===4?"visible":"collapse"}}  />
+          <CustomSelect title={"Select Diet Type"} values={["Vegetarian", "Vegan", "Keto", "Other"]} onChange={handleChange} placeholder={"Diet Type"} style={{display: step===5?"block":"none"}} />
+          {/* <select name="dietType" value={userData.dietType} onChange={handleChange} style={{visibility: step===5?"visible":"collapse"}} >
+            <option value="">Select Diet Type</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="keto">Keto</option>
+            <option value="other">Other</option>
+          </select> */}
+          <input type="text" name="goal" value={userData.goal} onChange={handleChange} placeholder="Fitness Goal" style={{visibility: step===6?"visible":"collapse"}}  />
+        </div>
+        <button type="submit" className='submit' style={{visibility: step===6?"visible":"collapse"}} >Submit</button>
+        <button type="button" className='action next'style={{visibility: step<6?"visible":"collapse"}} onClick={next_step} >Next</button>
+        <button type="button" className='action back'style={{visibility: step>0?"visible":"hidden"}} onClick={back_step} >Back</button>
+      </form>
+      <Link to="/" className="homepage-button">Menu</Link>
+      </>
   );
 }
 
