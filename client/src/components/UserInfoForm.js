@@ -7,8 +7,8 @@ import '../styles/Background.css';
 
 function UserInfoForm() {
   const [userData, setUserData] = useState({
-    name: '',
     email: '',
+    name: '',
     weight: '',
     height: '',
     age: '',
@@ -21,11 +21,11 @@ function UserInfoForm() {
   //? Used for auto focus when go to next
   let input_fields = useRef(document.getElementsByTagName("input"));
 
-  function back_step() {
+  function backStep() {
     setStep(step - 1);
   }
 
-  const next_step = useCallback(() => {
+  const nextStep = useCallback(() => {
     if(Object.values(userData).at(step) === '') {
       return;
     }
@@ -54,9 +54,9 @@ function UserInfoForm() {
   
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
-      if (e.key === "Enter") next_step();
+      if (e.key === "Enter") nextStep();
     });
-  }, [next_step]);
+  }, [nextStep]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,10 +74,10 @@ function UserInfoForm() {
       <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
         <h1 className='question'>What is your {Object.keys(userData).at(step)}?</h1>
         <div className="input-field-container">
-          <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
           <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} />
-          <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight" style={{visibility: step===2?"visible":"collapse"}}  />
-          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height" style={{visibility: step===3?"visible":"collapse"}}  />
+          <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
+          <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{visibility: step===2?"visible":"collapse"}}  />
+          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height ()" style={{visibility: step===3?"visible":"collapse"}}  />
           <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===4?"visible":"collapse"}}  />
           <CustomSelect title={"Select Diet Type"} values={["Vegetarian", "Vegan", "Keto", "Other"]} onChange={handleChange} placeholder={"Diet Type"} style={{display: step===5?"block":"none"}} />
           {/* <select name="dietType" value={userData.dietType} onChange={handleChange} style={{visibility: step===5?"visible":"collapse"}} >
@@ -90,8 +90,8 @@ function UserInfoForm() {
           <input type="text" name="goal" value={userData.goal} onChange={handleChange} placeholder="Fitness Goal" style={{visibility: step===6?"visible":"collapse"}}  />
         </div>
         <button type="submit" className='submit' style={{visibility: step===6?"visible":"collapse"}} >Submit</button>
-        <button type="button" className='action next'style={{visibility: step<6?"visible":"collapse"}} onClick={next_step} >Next</button>
-        <button type="button" className='action back'style={{visibility: step>0?"visible":"hidden"}} onClick={back_step} >Back</button>
+        <button type="button" className='action next'style={{visibility: step<6?"visible":"collapse"}} onClick={nextStep} >Next</button>
+        <button type="button" className='action back'style={{visibility: step>0?"visible":"hidden"}} onClick={backStep} >Back</button>
       </form>
       <Link to="/" className="homepage-button">Menu</Link>
       </>
