@@ -7,8 +7,8 @@ import '../styles/Background.css';
 
 function UserInfoForm() {
   const [userData, setUserData] = useState({
-    email: '',
     name: '',
+    email: '',
     weight: '',
     height: '',
     age: '',
@@ -26,8 +26,22 @@ function UserInfoForm() {
   }
 
   const nextStep = useCallback(() => {
+    console.log(userData)
+    console.log("step:", step)
     if(Object.values(userData).at(step) === '') {
       return;
+    }
+    // Check if user has entered a valid format email
+    if(step === 1) {
+      const email = userData.email;
+      // Regular expression for email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // If it fails validation then return alert and prevent nextStep
+      if (!emailRegex.test(email)) {
+        console.error('Invalid email format');
+        alert('Please enter a valid email address.');
+        return
+      }
     }
     if(step < 5) {
       setTimeout(() => {
@@ -74,8 +88,8 @@ function UserInfoForm() {
       <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
         <h1 className='question'>What is your {Object.keys(userData).at(step)}?</h1>
         <div className="input-field-container">
-          <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} />
           <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
+          <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} />
           <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{visibility: step===2?"visible":"collapse"}}  />
           <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height ()" style={{visibility: step===3?"visible":"collapse"}}  />
           <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===4?"visible":"collapse"}}  />
