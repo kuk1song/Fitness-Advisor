@@ -7,7 +7,7 @@ function CustomSelect({ title, values, onChange, className="", style="" }) {
     const [pickedText, setPickedText] = useState("");
 
     function handleSelect(e) {
-        setPickedText(e.target.value);
+        setPickedText(e.target.textContent);
         setOpen(false);
         onChange(e);
     }

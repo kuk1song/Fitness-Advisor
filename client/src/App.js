@@ -12,12 +12,11 @@ import Logout from './components/Logout';
 import Dashboard from './components/Dashboard';
 import AuthGuard from './components/AuthGuard'; 
 // import { AuthService } from './services/AuthService';
-import { AuthService } from './services/AuthService';
 import './styles/Global.css';
 // import './styles/ReactCalendar.css';
 
 const App = () => {
-  const [user, setUser] = useState('');
+  const [, setUser] = useState('');
   
   // const isAuthenticated = AuthService.isAuthenticated();
 
