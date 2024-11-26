@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import healthRoutes from './routes/health.js';
+import userRoutes from './routes/user.js';
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ mongoose.connect(`${process.env.MONGO_URI}`)
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/api', healthRoutes);
+app.use('/api', healthRoutes, userRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 5000; // Use the PORT environment variable if it's defined, otherwise default to port 3000
