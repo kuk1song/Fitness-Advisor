@@ -43,6 +43,7 @@ function UserInfoForm() {
         return
       }
     }
+    if(step )
     if(step < 5) {
       setTimeout(() => {
         input_fields.current[step+1].focus();
@@ -74,6 +75,11 @@ function UserInfoForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if((name === "weight" || name === "height" || name === "age") &&(value < 1)) {
+      console.log("stop")
+      return;
+    }
     setUserData({ ...userData, [name]: value });
   };
 
@@ -91,7 +97,7 @@ function UserInfoForm() {
           <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
           <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} />
           <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{visibility: step===2?"visible":"collapse"}}  />
-          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height ()" style={{visibility: step===3?"visible":"collapse"}}  />
+          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height (Meters)" style={{visibility: step===3?"visible":"collapse"}}  />
           <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===4?"visible":"collapse"}}  />
           <CustomSelect title={"Select Diet Type"} values={["Vegetarian", "Vegan", "Keto", "Other"]} onChange={handleChange} placeholder={"Diet Type"} style={{display: step===5?"block":"none"}} />
           {/* <select name="dietType" value={userData.dietType} onChange={handleChange} style={{visibility: step===5?"visible":"collapse"}} >
