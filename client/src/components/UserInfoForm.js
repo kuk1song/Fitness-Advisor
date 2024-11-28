@@ -17,6 +17,7 @@ function UserInfoForm() {
   });
 
   const [step, setStep] = useState(0);
+  const [alertVisible, setAlertVisible] = useState(false);
 
   //? Used for auto focus when go to next
   let input_fields = useRef(document.getElementsByTagName("input"));
@@ -38,11 +39,14 @@ function UserInfoForm() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       // If it fails validation then return alert and prevent nextStep
       if (!emailRegex.test(email)) {
-        console.error('Invalid email format');
-        alert('Please enter a valid email address.');
-        return
+        if(!alertVisible) {
+          alert('Please enter a valid email address.');
+          setAlertVisible(true)
+        }
+          return
       }
     }
+    setAlertVisible(false)
     if(step )
     if(step < 5) {
       setTimeout(() => {
@@ -50,6 +54,7 @@ function UserInfoForm() {
       }, 10);
     }
     setStep(step + 1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input_fields, step, userData]);
 
 
@@ -68,15 +73,25 @@ function UserInfoForm() {
   }, []);
   
   useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === "Enter") nextStep();
-    });
+    const handleEnter = (e) => {
+      // Ensure nextStep is only called once per Enter press
+      if (e.key === "Enter") {
+        e.preventDefault();
+        nextStep();
+      }
+    } 
+    document.addEventListener('keydown', handleEnter);
+
+    // Remove event listener to avoid duplication
+    return () => {
+      document.removeEventListener('keydown', handleEnter)
+    }
   }, [nextStep]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if((name === "weight" || name === "height" || name === "age") &&(value < 1)) {
+    if((name === "weight" || name === "height" || name === "age") && (value < 1)) {
       console.log("stop")
       return;
     }
