@@ -16,7 +16,7 @@ function UserInfoForm() {
     goal: '',
   });
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
 
   //? Used for auto focus when go to next
   let input_fields = useRef(document.getElementsByTagName("input"));
@@ -44,7 +44,7 @@ function UserInfoForm() {
       }
     }
     if(step )
-    if(step < 5) {
+    if(step < 3) {
       setTimeout(() => {
         input_fields.current[step+1].focus();
       }, 10);
@@ -94,8 +94,8 @@ function UserInfoForm() {
       <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
         <h1 className='question'>What is your {Object.keys(userData).at(step)}?</h1>
         <div className="input-field-container">
-          <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
-          <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} />
+          {/* <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
+          <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} /> */}
           <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{visibility: step===2?"visible":"collapse"}}  />
           <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height (Meters)" style={{visibility: step===3?"visible":"collapse"}}  />
           <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===4?"visible":"collapse"}}  />
