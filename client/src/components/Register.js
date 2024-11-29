@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthService } from '../services/AuthService'; // import the AuthService which is used to make backend API calls
 import InputWithDynamicColor from '../components/InputWithDynamicColor';
 
 function Register() {

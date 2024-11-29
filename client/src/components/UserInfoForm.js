@@ -49,9 +49,7 @@ function UserInfoForm() {
   useEffect(() => {
     console.log(input_fields);
     
-    const loggedInEmail = localStorage.getItem('email');
-    console.log(loggedInEmail);
-    if (loggedInEmail) {
+    if (userStorageInfo) {
       setUserData((prevData) => ({
         ...prevData,
         email: userStorageInfo.email,
