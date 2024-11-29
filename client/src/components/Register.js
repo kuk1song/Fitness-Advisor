@@ -5,7 +5,7 @@ import InputWithDynamicColor from '../components/InputWithDynamicColor';
 
 function Register() {
   const [formData, setFormData] = useState({ email: '', name: '', password: '' });
-  const [error, setError] = useState('');  // using for error handling
+  const [alertVisible, setAlertVisible] = useState(false)
   const navigate = useNavigate();
   
   // Update the form data when the user types in the input fields
@@ -17,30 +17,34 @@ function Register() {
   // submit the form data to the server
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // clear any previous errors
 
-    try {
-        // call the register method from the AuthService
-        const response = await AuthService.register(formData);
-        // check if the response is successful
-        if (response && response.message === 'User registered successfully') {
-            // show a success message and redirect to the login page
-            localStorage.setItem('registrationSuccess', 'Registration successful, please log in!');
-            navigate('/login');    
-        } else {
-            console.error('Unexpected response format:', response);
+    const email = formData.email;
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Checks all fields have content
+    if(formData.email.length > 0 && formData.name.length > 0) {
+      // If email fails validation then return alert
+      if (!emailRegex.test(email)) {
+        if(!alertVisible) {
+          alert('Please enter a valid email address.');
+          setAlertVisible(true)
         }
-    } catch (error) {
-          // handle the error
-          console.error('Registration error:', error);
-          setError('Registration failed. Please try it again.');
+      }
+    } else {
+      alert('Please fill out all fields.');
+      setAlertVisible(true)
+      return
     }
+    localStorage.setItem("userInfo", formData)
+    navigate("/user-info-form")
+    setAlertVisible(false)
   };
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h2>Register</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <InputWithDynamicColor
           type="email" 
           name="email" 
@@ -68,8 +72,7 @@ function Register() {
           required 
           style={{ marginBottom: '10px', padding: '8px', width: '250px' }}
         />
-        <button type="submit" style={{ padding: '10px 20px', width: '150px' }}>Sign Up</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* display error message */}
+        <button type="submit" onClick={handleSubmit} style={{ padding: '10px 20px', width: '150px' }}>Sign Up</button>
       </form>
       <p>Already have an account? <Link to="/login">Sign In</Link></p>
     </div>

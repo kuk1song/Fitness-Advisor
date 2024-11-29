@@ -17,10 +17,12 @@ function UserInfoForm() {
   });
 
   const [step, setStep] = useState(0);
-  const [alertVisible, setAlertVisible] = useState(false);
 
   //? Used for auto focus when go to next
   let input_fields = useRef(document.getElementsByTagName("input"));
+
+  // Pull user registration form data from localStorage
+  const userStorageInfo = localStorage.getItem("userInfo")
 
   function backStep() {
     setStep(step - 1);
@@ -32,21 +34,6 @@ function UserInfoForm() {
     if(Object.values(userData).at(step) === '') {
       return;
     }
-    // Check if user has entered a valid format email
-    if(step === 1) {
-      const email = userData.email;
-      // Regular expression for email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // If it fails validation then return alert and prevent nextStep
-      if (!emailRegex.test(email)) {
-        if(!alertVisible) {
-          alert('Please enter a valid email address.');
-          setAlertVisible(true)
-        }
-          return
-      }
-    }
-    setAlertVisible(false)
     if(step )
     if(step < 5) {
       setTimeout(() => {
@@ -67,7 +54,8 @@ function UserInfoForm() {
     if (loggedInEmail) {
       setUserData((prevData) => ({
         ...prevData,
-        email: loggedInEmail,
+        email: userStorageInfo.email,
+        name: userStorageInfo.name,
       }));
     }
   }, []);
