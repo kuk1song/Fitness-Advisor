@@ -6,7 +6,7 @@ function Logout() {
 
   useEffect(() => {
     
-    localStorage.removeItem('userToken'); // clear the token
+    localStorage.removeItem('token'); // clear the token
 
     navigate('/login');
   }, [navigate]);

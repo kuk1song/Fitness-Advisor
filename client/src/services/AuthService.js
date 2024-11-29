@@ -54,7 +54,7 @@ export const AuthService = {
     console.log('User logged out');
   },
 
-  isAuthenticated: () => {
-    return !!localStorage.getItem('token'); // Check if token exists
-  },
+  // isAuthenticated: () => {
+  //   return !!localStorage.getItem('token'); // Check if token exists
+  // },
 };
