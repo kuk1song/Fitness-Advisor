@@ -34,7 +34,7 @@ function Homepage() {
 function GridButtons() {
   return <>
     <div className='grid-buttons'>
-      <Link to="/user" className="link-button data-button" title="Change your data and regenerate result!">
+      <Link to="/user-info-form" className="link-button data-button" title="Change your data and regenerate result!">
         <h1>
           My Data
         </h1>
