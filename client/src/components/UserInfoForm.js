@@ -94,7 +94,8 @@ function UserInfoForm() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    if (e)
+      e.preventDefault();
 
     if (!handlingSubmit) {
       if (userData.email) {

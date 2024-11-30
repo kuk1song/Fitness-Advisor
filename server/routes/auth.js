@@ -9,6 +9,13 @@ const authRoutes = express.Router();
 authRoutes.post('/register', async (req, res) => {
   const { email, password, name } = req.body;
   
+  // Regular expression for email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // If it fails validation then return alert and prevent nextStep
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: 'Email is not valid!' })
+  }
+  
   try {
     // check if the email is already registered
     const existingUser = await User.findOne({ email });

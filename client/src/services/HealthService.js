@@ -9,15 +9,21 @@ export const HealthService = {
         //? | 1. Get the Given Data   |
         //? +-------------------------+
         let { email } = userData;
+
+        // If email is empty or not included
+        if (!email) {
+            return false;
+        }
         email = DOMPurify.sanitize(email);
         
         try {
             //? +-------------------------+
             //? | 2.Get the User ID Data  |
             //? +-------------------------+
-            const userResult = await fetch(USER_URL+`?email=${email}`);
+            const userResult = await fetch(USER_URL + `?email=${email}`);
             const userId = userResult.id;
-    
+
+
             //? +-------------------------+
             //? | 3.Send the Health Data  |
             //? +-------------------------+
