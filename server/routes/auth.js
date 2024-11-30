@@ -1,7 +1,8 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from  '../models/User.js';
+import User from '../models/User.js';
+import authMiddleware from '../middleware/auth.js';
 
 const authRoutes = express.Router();
 
@@ -34,26 +35,40 @@ authRoutes.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+    const user = await User.findOne({ email }).select('email username passwordHash');
+
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
-    if (!isPasswordCorrect) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
-    // generate a JWT token
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
-
-    res.status(200).json({ message: 'Login successful', token, user: { email, username: user.username } });
+    // Create a new Access Token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    
+    res.status(200).json({ 
+      message: 'Login successful', 
+      token, 
+      user: { email: user.email, username: user.username } 
+    });
   } catch (error) {
-    console.error(error);
+    console.error('Login error:', error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+authRoutes.get('/user', authMiddleware, async (req, res) => {
+  try {
+  
+    console.log("Decoded token:", req.user);
+    
+    const user = await User.findById(req.user.userId).select('name email'); 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ name: user.name, email: user.email });
+  } catch (error) {
+    console.error("Error fetching user:", error);
     res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 });

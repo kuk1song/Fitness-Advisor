@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import CustomSelect from './CustomSelect';
+import { AuthService } from '../services/AuthService';
 
 import '../styles/DataForm.css';
 import '../styles/Background.css';
 
 function UserInfoForm() {
   const [userData, setUserData] = useState({
-    name: '',
-    email: '',
+    // name: '',
+    // email: '',
     weight: '',
     height: '',
     age: '',
@@ -16,7 +17,7 @@ function UserInfoForm() {
     goal: '',
   });
 
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
 
   //? Used for auto focus when go to next
   let input_fields = useRef(document.getElementsByTagName("input"));
@@ -31,19 +32,19 @@ function UserInfoForm() {
     if(Object.values(userData).at(step) === '') {
       return;
     }
-    // Check if user has entered a valid format email
-    if(step === 1) {
-      const email = userData.email;
-      // Regular expression for email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // If it fails validation then return alert and prevent nextStep
-      if (!emailRegex.test(email)) {
-        console.error('Invalid email format');
-        alert('Please enter a valid email address.');
-        return
-      }
-    }
-    if(step )
+    // // Check if user has entered a valid format email
+    // if(step === 1) {
+    //   const email = userData.email;
+    //   // Regular expression for email validation
+    //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //   // If it fails validation then return alert and prevent nextStep
+    //   if (!emailRegex.test(email)) {
+    //     console.error('Invalid email format');
+    //     alert('Please enter a valid email address.');
+    //     return
+    //   }
+    // }
+    // if(step )
     if(step < 3) {
       setTimeout(() => {
         input_fields.current[step+1].focus();
@@ -52,19 +53,15 @@ function UserInfoForm() {
     setStep(step + 1);
   }, [input_fields, step, userData]);
 
-
-  // Load user data from local storage
+  const [userName, setUserName] = useState('');
   useEffect(() => {
-    console.log(input_fields);
-    
-    const loggedInEmail = localStorage.getItem('email');
-    console.log(loggedInEmail);
-    if (loggedInEmail) {
-      setUserData((prevData) => ({
-        ...prevData,
-        email: loggedInEmail,
-      }));
+    async function loadUserName() {
+      const user = await AuthService.getUser();
+      if (user && user.name) {
+        setUserName(user.name);
+      }
     }
+    loadUserName();
   }, []);
   
   useEffect(() => {
@@ -92,14 +89,15 @@ function UserInfoForm() {
     <>
       <div className="bg bg-dataform"></div>
       <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
+        <h1>Hi, {userName || 'Guest'}!</h1>
         <h1 className='question'>What is your {Object.keys(userData).at(step)}?</h1>
         <div className="input-field-container">
           {/* <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
           <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} /> */}
-          <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{visibility: step===2?"visible":"collapse"}}  />
-          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height (Meters)" style={{visibility: step===3?"visible":"collapse"}}  />
-          <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===4?"visible":"collapse"}}  />
-          <CustomSelect title={"Select Diet Type"} values={["Vegetarian", "Vegan", "Keto", "Other"]} onChange={handleChange} placeholder={"Diet Type"} style={{display: step===5?"block":"none"}} />
+          <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{visibility: step===0?"visible":"collapse"}}  />
+          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height (Meters)" style={{visibility: step===1?"visible":"collapse"}}  />
+          <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===2?"visible":"collapse"}}  />
+          <CustomSelect title={"Select Diet Type"} values={["Vegetarian", "Vegan", "Keto", "Other"]} onChange={handleChange} placeholder={"Diet Type"} style={{display: step===3?"block":"none"}} />
           {/* <select name="dietType" value={userData.dietType} onChange={handleChange} style={{visibility: step===5?"visible":"collapse"}} >
             <option value="">Select Diet Type</option>
             <option value="vegetarian">Vegetarian</option>
@@ -107,10 +105,10 @@ function UserInfoForm() {
             <option value="keto">Keto</option>
             <option value="other">Other</option>
           </select> */}
-          <input type="text" name="goal" value={userData.goal} onChange={handleChange} placeholder="Fitness Goal" style={{visibility: step===6?"visible":"collapse"}}  />
+          <input type="text" name="goal" value={userData.goal} onChange={handleChange} placeholder="Fitness Goal" style={{visibility: step===4?"visible":"collapse"}}  />
         </div>
-        <button type="submit" className='submit' style={{visibility: step===6?"visible":"collapse"}} >Submit</button>
-        <button type="button" className='action next'style={{visibility: step<6?"visible":"collapse"}} onClick={nextStep} >Next</button>
+        <button type="submit" className='submit' style={{visibility: step===5?"visible":"collapse"}} >Submit</button>
+        <button type="button" className='action next'style={{visibility: step<5?"visible":"collapse"}} onClick={nextStep} >Next</button>
         <button type="button" className='action back'style={{visibility: step>0?"visible":"hidden"}} onClick={backStep} >Back</button>
       </form>
       <Link to="/" className="homepage-button">Menu</Link>
