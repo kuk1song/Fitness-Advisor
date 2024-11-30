@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import CustomSelect from './CustomSelect';
+import { AuthService } from '../services/AuthService';
+
 import { HealthService } from '../services/HealthService';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,12 +38,17 @@ function UserInfoForm() {
       return;
     }
 
+   
+    if(step < 3) {
+
+
     // Check if the user enter a real value or just empty string
     if (Object.values(userData).at(step) === '') {
       return;
     }
 
     if (step < 2) {
+
       setTimeout(() => {
         input_fields.current[step + 1].focus();
       }, 10);
@@ -50,9 +57,18 @@ function UserInfoForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input_fields, step, userData]);
 
-
-  // Load user data from local storage
+  const [userName, setUserName] = useState('');
   useEffect(() => {
+
+    async function loadUserName() {
+      const user = await AuthService.getUser();
+      if (user) {
+        setUserName(user.name);
+      }
+    }
+    loadUserName();
+  }, []);
+  
     const loggedInEmail = localStorage.getItem('email');
     console.log(loggedInEmail);
     if (loggedInEmail) {
@@ -125,9 +141,28 @@ function UserInfoForm() {
     <>
       <div className="bg bg-dataform"></div>
       <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
+        <h1>Hi, {userName || 'Guest'}!</h1>
         <h1 className='question'>What is your {Object.keys(userData).at(step)}?</h1>
         <p className='count'><span>{step + 1}</span>/{Object.keys(userData).length - 1}</p>
         <div className="input-field-container">
+          {/* <input type="text" name="name" value={userData.name} onChange={handleChange} placeholder="Name" style={{visibility: step===0?"visible":"collapse"}} />
+          <input type="email" name="email" value={userData.email} onChange={handleChange} placeholder="Email" style={{visibility: step===1?"visible":"collapse"}} /> */}
+          <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{visibility: step===0?"visible":"collapse"}}  />
+          <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height (Meters)" style={{visibility: step===1?"visible":"collapse"}}  />
+          <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{visibility: step===2?"visible":"collapse"}}  />
+          <CustomSelect title={"Select Diet Type"} values={["Vegetarian", "Vegan", "Keto", "Other"]} onChange={handleChange} placeholder={"Diet Type"} style={{display: step===3?"block":"none"}} />
+          {/* <select name="dietType" value={userData.dietType} onChange={handleChange} style={{visibility: step===5?"visible":"collapse"}} >
+            <option value="">Select Diet Type</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="keto">Keto</option>
+            <option value="other">Other</option>
+          </select> */}
+          <input type="text" name="goal" value={userData.goal} onChange={handleChange} placeholder="Fitness Goal" style={{visibility: step===4?"visible":"collapse"}}  />
+        </div>
+        <button type="submit" className='submit' style={{visibility: step===5?"visible":"collapse"}} >Submit</button>
+        <button type="button" className='action next'style={{visibility: step<5?"visible":"collapse"}} onClick={nextStep} >Next</button>
+        <button type="button" className='action back'style={{visibility: step>0?"visible":"hidden"}} onClick={backStep} >Back</button>
           <input type="number" name="weight" value={userData.weight} onChange={handleChange} placeholder="Weight (Lbs)" style={{ pointerEvents: step === 0 ? "visible" : "none", "opacity": step === 0 ? "1" : "0" }} />
           <input type="number" name="height" value={userData.height} onChange={handleChange} placeholder="Height (Meters)" style={{ pointerEvents: step === 1 ? "visible" : "none", "opacity": step === 1 ? "1" : "0" }} />
           <input type="number" name="age" value={userData.age} onChange={handleChange} placeholder="Age" style={{ pointerEvents: step === 2 ? "visible" : "none", "opacity": step === 2 ? "1" : "0" }} />

@@ -19,8 +19,6 @@ function Login() {
     try {
       const response = await AuthService.login(formData);
       if (response && response.token) {
-        // login successful, save the token in local storage
-        localStorage.setItem('authToken', response.token);
         navigate('/');
       } else if (response && response.message) {
         setError(response.message);

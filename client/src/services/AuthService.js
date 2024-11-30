@@ -41,20 +41,43 @@ export const AuthService = {
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token); // Store token for authentication
+      localStorage.setItem('token', data.token); // Store token
+      localStorage.setItem('user', JSON.stringify(data.user));
+
       return data;
+
     } catch (error) {
       console.error('Login error:', error.message);
       throw error;
     }
   },
 
-  logout: () => {
-    localStorage.removeItem('token'); // Remove token on logout
-    console.log('User logged out');
-  },
+  getUser: async () => {
+    const token = localStorage.getItem('token');
 
-  isAuthenticated: () => {
-    return !!localStorage.getItem('token'); // Check if token exists
+  try {
+    const response = await fetch(`${BASE_URL}/user`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        console.warn('Token expired or invalid. Logging out...');
+      } else {
+        throw new Error(`Failed to fetch user data: ${response.statusText}`);
+      }
+    }
+
+    const data = await response.json();
+    console.log('User data:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching user data:', error.message);
+  }
   },
+  
 };
