@@ -23,6 +23,10 @@ form > button {
     width: min-content;
 }
 
+form > button.action {
+    margin: 5px;
+}
+
 form > .input-field-container {
     position: relative;
     width: 200px;
