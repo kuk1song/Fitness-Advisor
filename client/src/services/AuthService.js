@@ -52,13 +52,6 @@ export const AuthService = {
     }
   },
 
-  logout: async () => {
-    localStorage.removeItem('token'); 
-    localStorage.removeItem('user');
-    console.log('User logged out');
-  },
-
-
   getUser: async () => {
     const token = localStorage.getItem('token');
 
@@ -74,7 +67,6 @@ export const AuthService = {
     if (!response.ok) {
       if (response.status === 401) {
         console.warn('Token expired or invalid. Logging out...');
-       
       } else {
         throw new Error(`Failed to fetch user data: ${response.statusText}`);
       }
@@ -82,6 +74,7 @@ export const AuthService = {
 
     const data = await response.json();
     console.log('User data:', data);
+    return data;
   } catch (error) {
     console.error('Error fetching user data:', error.message);
   }

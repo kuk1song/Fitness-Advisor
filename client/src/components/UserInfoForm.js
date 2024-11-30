@@ -32,19 +32,7 @@ function UserInfoForm() {
     if(Object.values(userData).at(step) === '') {
       return;
     }
-    // // Check if user has entered a valid format email
-    // if(step === 1) {
-    //   const email = userData.email;
-    //   // Regular expression for email validation
-    //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //   // If it fails validation then return alert and prevent nextStep
-    //   if (!emailRegex.test(email)) {
-    //     console.error('Invalid email format');
-    //     alert('Please enter a valid email address.');
-    //     return
-    //   }
-    // }
-    // if(step )
+   
     if(step < 3) {
       setTimeout(() => {
         input_fields.current[step+1].focus();
@@ -57,7 +45,7 @@ function UserInfoForm() {
   useEffect(() => {
     async function loadUserName() {
       const user = await AuthService.getUser();
-      if (user && user.name) {
+      if (user) {
         setUserName(user.name);
       }
     }
