@@ -44,14 +44,13 @@ function UserInfoForm() {
       return;
     }
 
-    // 自动聚焦到下一个字段
+    // auto focus to the next input
     if (step < Object.keys(userData).length - 2) {
       setTimeout(() => {
         inputRefs.current[step + 1]?.focus();
       }, 10);
     }
 
-    // 进入下一步
     setStep((prev) => prev + 1);
   }, [step, userData]);
 
