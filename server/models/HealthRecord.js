@@ -1,15 +1,17 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-const healthRecordSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  height: Number,
-  weight: Number,
-  age: Number,
-  dietType: String,
-  fitnessGoal: String,
+const UserHealthSchema = new mongoose.Schema({
+  weight: { type: Number, required: true },
+  height: { type: Number, required: true },
+  age: { type: Number, required: true },
+  dietType: { type: String, required: true },
+  mealFrequency: { type: String, enum: ['2-3 meals', '3-5 meals', '6+ meals'], required: true },
+  activityLevel: { type: String, enum: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'], required: true },
+  fitnessExperience: { type: String, enum: ['Never', 'Beginner', 'Intermediate', 'Advanced'], required: true },
+  preferredExerciseTypes: { type: [String], default: [] },
+  sleepDuration: { type: Number, required: true },
+  goal: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
-const HealthRecord = mongoose.model('HealthRecord', healthRecordSchema);
-
-export default HealthRecord;
+module.exports = mongoose.model('UserHealth', UserHealthSchema);
