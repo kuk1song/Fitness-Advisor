@@ -10,9 +10,9 @@ const authRoutes = express.Router();
 authRoutes.post('/register', async (req, res) => {
   const { email, password, name } = req.body;
   
-  // Regular expression for email validation
+  // regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // If it fails validation then return alert and prevent nextStep
+  // if it fails validation then return alert and prevent nextStep
   if (!emailRegex.test(email)) {
     return res.status(400).json({ message: 'Email is not valid!' })
   }
@@ -28,7 +28,7 @@ authRoutes.post('/register', async (req, res) => {
     // create a new user
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = new User({ email, name, passwordHash });
-    await newUser.save();
+    await newUser.save(); // save the user to the database
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -48,7 +48,7 @@ authRoutes.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Create a new Access Token
+    // create a new Access Token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
     
     res.status(200).json({ 

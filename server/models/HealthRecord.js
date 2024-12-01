@@ -5,7 +5,7 @@ const userHealthSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true, 
-      ref: 'User', // Related User Model
+      ref: 'User', // related User Model
     },
     weight: {
       type: Number,
@@ -24,30 +24,9 @@ const userHealthSchema = new mongoose.Schema(
       enum: ['Vegetarian', 'Vegan', 'Keto', 'Other'],
       required: true,
     },
-    goal: {
-      type: String,
-      required: true,
-    },
     activityLevel: {
       type: String,
       enum: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'],
-      required: true,
-    },
-    sleepHours: {
-      type: Number,
-      required: true,
-    },
-    waterIntake: {
-      type: Number,
-      required: true,
-    },
-    healthConditions: {
-      type: [String], // Array of strings for multiple conditions
-      default: [],
-    },
-    emotionalState: {
-      type: String,
-      enum: ['Good', 'Average', 'Poor'],
       required: true,
     },
     fitnessFrequency: {
@@ -55,21 +34,22 @@ const userHealthSchema = new mongoose.Schema(
       enum: ['Never', 'Occasionally', 'Regularly'],
       required: true,
     },
-    dietaryHabits: {
+    preferredExerciseTypes: {
+      type: [String],
+      default: []
+    },
+    mealFrequency: {
       type: String,
+      enum: ['2-3 meals', '3-5 meals', '6+ meals'],
+      required: true
+    },
+    sleepHours: {
+      type: Number,
       required: true,
     },
-    bodyFatPercentage: {
-      type: Number,
-      required: false,
-    },
-    heartRate: {
-      type: Number,
-      required: false,
-    },
-    bloodPressure: {
+    goal: {
       type: String,
-      required: false,
+      required: true,
     },
   },
   {
@@ -77,6 +57,6 @@ const userHealthSchema = new mongoose.Schema(
   }
 );
 
-const UserHealth = mongoose.model('UserHealth', userHealthSchema);
+const HealthRecord = mongoose.model('UserHealth', userHealthSchema);
 
-export default UserHealth;
+export default HealthRecord;
