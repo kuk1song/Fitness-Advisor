@@ -1,4 +1,4 @@
-form {
+form.user-info-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,21 +19,21 @@ form {
     left: 50%;
 }
 
-form > button {
+form.user-info-form > button {
     width: min-content;
 }
 
-form > button.action {
+form.user-info-form > button.action {
     margin: 5px;
 }
 
-form > .input-field-container {
+form.user-info-form > .input-field-container {
     position: relative;
     width: 200px;
     height: 100px;
 }
 
-form > .input-field-container > * {
+form.user-info-form > .input-field-container > * {
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '../services/AuthService'; // import the AuthService which is used to make backend API calls
 import InputWithDynamicColor from '../components/InputWithDynamicColor';
+import "../styles/Register.css";
 
 function Register() {
   const [formData, setFormData] = useState({ email: '', name: '', password: '' });
@@ -10,12 +11,16 @@ function Register() {
 
   const [alertVisible, setAlertVisible] = useState(false);
 
+  useEffect(() => {
+    document.addEventListener("click",() => {
+      setAlertVisible(false);
+    });
+  }, [])
 
   // Update the form data when the user types in the input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-    setAlertVisible(false)
   };
 
   // submit the form data to the server

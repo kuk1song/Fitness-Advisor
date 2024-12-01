@@ -22,6 +22,10 @@ export const HealthService = {
             //? +-------------------------+
             const userResult = await fetch(USER_URL + `?email=${email}`);
             const userId = userResult.id;
+            if(!userId) {
+                alert("You haven't been registered yet!");
+                return false;
+            }
 
 
             //? +-------------------------+
