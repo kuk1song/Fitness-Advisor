@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import CustomSelect from './CustomSelect';
 import { AuthService } from '../services/AuthService';
-
 import { HealthService } from '../services/HealthService';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,54 +29,13 @@ function UserInfoForm() {
 
   // intialize the inputRefs
   const inputRefs = useRef([]);
-
-  const backStep = () => {
-    if (step > 0) setStep(step - 1);
-  };
-
-  const nextStep = useCallback(() => {
-    // check if the step is higher than the length (except email so that's why it's - 2)
-    if (step >= Object.values(userData).length - 2) {
-      handleSubmit();
-      return;
-    }
-
-    // check if the user enter a real value or just empty string
-    const currentValue = Object.values(userData)[step];
-    if (!currentValue) {
-      console.error('Current step data is empty!');
-      return;
-    }
-
-    // auto focus to the next input
-    if (step < Object.keys(userData).length - 2) {
-      setTimeout(() => {
-        inputRefs.current[step + 1]?.focus();
-      }, 10);
-    }
-
-    setStep((prev) => prev + 1);
-  }, [step, userData]);
-
-  useEffect(() => {
-    const handleEnter = (e) => {
-      // ensure nextStep is only called once per Enter press
-      if (e.key === "Enter") {
-        e.preventDefault();
-        nextStep();
-      }
-    }
-    document.addEventListener('keydown', handleEnter);
-
-    // remove event listener to avoid duplication
-    return () => {
-      document.removeEventListener('keydown', handleEnter)
-    }
-  }, [nextStep]);
-
+  
+  // check if the current step is the last step
+  const isLastStep = step === Object.keys(userData).length - 1;
+  
+  // load the user name
   const [userName, setUserName] = useState('');
   useEffect(() => {
-
     async function loadUserName() {
       const user = await AuthService.getUser();
       if (user) {
@@ -87,102 +45,117 @@ function UserInfoForm() {
     loadUserName();
   }, []);
 
+  const backStep = () => {
+    if (step > 0) setStep(step - 1);
+  };
+
+  const handleSubmit = useCallback(async (e) => {
+    if (e) e.preventDefault();  // prevent the default form submission
+    if (handlingSubmit) return; // if already handling submit, prevent duplicate submission
+    setHandlingSubmit(true);
+
+    const missingFields = Object.entries(userData).filter(([key, value]) => !value);
+    if (missingFields.length > 0) {
+      alert(`Please fill out all fields before submitting: ${missingFields.map(([key]) => key).join(', ')}`);
+      setHandlingSubmit(false);
+      return;
+    }
+
+    try {
+      const response = await HealthService.add(userData); // submit the health data to the Atlas
+      if (!response.success) throw new Error('Failed to submit data');
+  
+      alert('Health data successfully submitted!');
+      navigate('/calendar'); // Redirect on success
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('An error occurred while submitting the data. Please try again.');
+    } finally {
+      setHandlingSubmit(false);
+    }
+  }, [userData, handlingSubmit, navigate]);
+
+  const nextStep = useCallback(() => {
+    const totalSteps = Object.keys(userData).length;
+    
+    if (step < totalSteps - 1 ) {
+      const currentKey = Object.keys(userData)[step];
+      const currentValue = userData[currentKey];
+      
+      if (!currentValue) {
+        alert(`Please fill out: ${currentKey}`);
+        return;
+      }
+
+      // auto focus to the next input
+      setTimeout(() => {
+        inputRefs.current[step + 1]?.focus();
+      }, 10);
+  
+      setStep((prev) => prev + 1);
+    }
+  }, [step, userData]);
+
+  useEffect(() => {
+    const handleEnter = (e) => {
+      // ensure nextStep is only called once per Enter press
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (isLastStep) {
+          // if it is the last step, focus on the submit button
+          document.querySelector('.submit')?.focus();
+        } else {
+          nextStep();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleEnter);
+
+    // remove event listener to avoid duplication
+    return () => {
+      document.removeEventListener('keydown', handleEnter)
+    }
+  }, [nextStep, isLastStep]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // it makes the user can put an empty value in order to let them insert another number. (if not it the first number can't be erased! You can try it by yourself. Atleast it is like that in my case..)
+    // it makes the user can put an empty value in order to let them insert another number. (if not it the first number can't be erased! You can try it by yourself. At least it is like that in my case..)
     if ((name === "weight" || name === "height" || name === "age") && (value < 1) && value !== "" && isNaN(value)) {
+      console.error(`${name} should be a number.`);
       return;
     }
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    if (e)
-      e.preventDefault();
-
-    if (!handlingSubmit) {
-      if (userData.email) {
-        HealthService.add(userData).then((value) => {
-          if (value) {
-            alert("Successfully update data!");
-          }
-          else {
-            alert("Update data failed!");
-            console.error(value);
-          }
-        }).catch((err) => {
-          alert("Update data failed unexpectedly!");
-          console.error(err);
-        }).finally(() => {
-          setHandlingSubmit(false);
-        })
-
-      }
-      else {
-        console.error("Email doesn't loaded");
-      }
-    }
-  };
-
   return (
     <>
       <div className="bg bg-dataform"></div>
-      <form onSubmit={handleSubmit} style={{ textAlign: 'center', marginTop: '20px' }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ textAlign: 'center', marginTop: '20px' }}>
         <h1>Hi, {userName || 'Guest'}!</h1>
         <h1 className="question">What is your {Object.keys(userData)[step]}?</h1>
         <p className="count">
-          <span>{step + 1}</span>/{Object.keys(userData).length}
+          <span>{step + 1} </span>/{Object.keys(userData).length}
         </p>
         <div className="input-field-container">
           {Object.keys(userData).map((key, index) => {
-            if (key === 'dietType') {
+             if (key === 'dietType' || key === 'activityLevel' || key === 'fitnessExperience' || key === 'mealFrequency') {
+              const options = {
+                dietType: ['Vegetarian', 'Vegan', 'Keto', 'Other'],
+                activityLevel: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'],
+                fitnessExperience: ['Never', 'Beginner', 'Intermediate', 'Advanced'],
+                mealFrequency: ['2-3 meals', '3-5 meals', '6+ meals'],
+              };
               return (
                 <CustomSelect
                   key={key}
-                  title="Select Diet Type"
-                  values={['Vegetarian', 'Vegan', 'Keto', 'Other']}
-                  onChange={(e) => handleChange({ target: { name: key, value: e } })}
-                  placeholder="Diet Type"
-                  style={{ display: step === index ? 'block' : 'none' }}
-                />
-              );
-            }
-
-            if (key === 'activityLevel') {
-              return (
-                <CustomSelect
-                  key={key}
-                  title="Select Activity Level"
-                  values={['Sedentary', 'Lightly active', 'Moderately active', 'Very active']}
-                  onChange={(e) => handleChange({ target: { name: key, value: e } })}
-                  placeholder="Activity Level"
-                  style={{ display: step === index ? 'block' : 'none' }}
-                />
-              );
-            }
-
-            if (key === 'fitnessExperience') {
-              return (
-                <CustomSelect
-                  key={key}
-                  title="Select Fitness Experience"
-                  values={['Never', 'Beginner', 'Intermediate', 'Advanced']}
-                  onChange={(e) => handleChange({ target: { name: key, value: e } })}
-                  placeholder="Fitness Experience"
-                  style={{ display: step === index ? 'block' : 'none' }}
-                />
-              );
-            }
-
-            if (key === 'mealFrequency') {
-              return (
-                <CustomSelect
-                  key={key}
-                  title="Select Meal Frequency"
-                  values={['2-3 meals', '3-5 meals', '6+ meals']}
-                  onChange={(e) => handleChange({ target: { name: key, value: e } })}
-                  placeholder="Meal Frequency"
+                  title={`Select ${key}`}
+                  values={options[key]}
+                  onChange={(value) => handleChange({ target: { name: key, value } })}
+                  placeholder={`Select ${key}`}
                   style={{ display: step === index ? 'block' : 'none' }}
                 />
               );
@@ -213,14 +186,14 @@ function UserInfoForm() {
           >
             Back
           </button>
-          {step < Object.keys(userData).length - 1 ? (
-            <button type="button" className="action next" onClick={nextStep}>
-              Next
-            </button>
-          ) : (
+           {isLastStep ? (
             <button type="submit" className="submit">
-              Submit
-            </button>
+               {handlingSubmit ? 'Submitting...' : 'Submit'}
+             </button>
+          ) : (
+          <button type="button" className="action next" onClick={nextStep}>
+            Next
+          </button>
           )}
         </div>
       </form>
@@ -230,6 +203,5 @@ function UserInfoForm() {
     </>
   );
 }
-
 
 export default UserInfoForm;
