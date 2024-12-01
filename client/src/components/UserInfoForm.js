@@ -17,11 +17,16 @@ function UserInfoForm() {
     height: '',
     age: '',
     dietType: '',
+    activityLevel: '',
+    fitnessExperience: '',
+    preferredExerciseTypes: '',
+    mealFrequency: '',
+    sleepHours: '',
     goal: '',
   });
 
-  const [step, setStep] = useState(0); // Used to check which step is currently on
-  const [handlingSubmit, setHandlingSubmit] = useState(false); // Used to check if is currently handling submit or not...
+  const [step, setStep] = useState(0); // used to check which step is currently on
+  const [handlingSubmit, setHandlingSubmit] = useState(false); // used to check if is currently handling submit or not...
 
   // intialize the inputRefs
   const inputRefs = useRef([]);
@@ -31,13 +36,13 @@ function UserInfoForm() {
   };
 
   const nextStep = useCallback(() => {
-    // Check if the step is higher than the length (except email so that's why it's - 2)
+    // check if the step is higher than the length (except email so that's why it's - 2)
     if (step >= Object.values(userData).length - 2) {
       handleSubmit();
       return;
     }
 
-    // Check if the user enter a real value or just empty string
+    // check if the user enter a real value or just empty string
     const currentValue = Object.values(userData)[step];
     if (!currentValue) {
       console.error('Current step data is empty!');
@@ -56,7 +61,7 @@ function UserInfoForm() {
 
   useEffect(() => {
     const handleEnter = (e) => {
-      // Ensure nextStep is only called once per Enter press
+      // ensure nextStep is only called once per Enter press
       if (e.key === "Enter") {
         e.preventDefault();
         nextStep();
@@ -64,7 +69,7 @@ function UserInfoForm() {
     }
     document.addEventListener('keydown', handleEnter);
 
-    // Remove event listener to avoid duplication
+    // remove event listener to avoid duplication
     return () => {
       document.removeEventListener('keydown', handleEnter)
     }
@@ -85,7 +90,7 @@ function UserInfoForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // It makes the user can put an empty value in order to let them insert another number. (if not it the first number can't be erased! You can try it by yourself. Atleast it is like that in my case..)
+    // it makes the user can put an empty value in order to let them insert another number. (if not it the first number can't be erased! You can try it by yourself. Atleast it is like that in my case..)
     if ((name === "weight" || name === "height" || name === "age") && (value < 1) && value !== "" && isNaN(value)) {
       return;
     }
@@ -139,6 +144,45 @@ function UserInfoForm() {
                   values={['Vegetarian', 'Vegan', 'Keto', 'Other']}
                   onChange={(e) => handleChange({ target: { name: key, value: e } })}
                   placeholder="Diet Type"
+                  style={{ display: step === index ? 'block' : 'none' }}
+                />
+              );
+            }
+
+            if (key === 'activityLevel') {
+              return (
+                <CustomSelect
+                  key={key}
+                  title="Select Activity Level"
+                  values={['Sedentary', 'Lightly active', 'Moderately active', 'Very active']}
+                  onChange={(e) => handleChange({ target: { name: key, value: e } })}
+                  placeholder="Activity Level"
+                  style={{ display: step === index ? 'block' : 'none' }}
+                />
+              );
+            }
+
+            if (key === 'fitnessExperience') {
+              return (
+                <CustomSelect
+                  key={key}
+                  title="Select Fitness Experience"
+                  values={['Never', 'Beginner', 'Intermediate', 'Advanced']}
+                  onChange={(e) => handleChange({ target: { name: key, value: e } })}
+                  placeholder="Fitness Experience"
+                  style={{ display: step === index ? 'block' : 'none' }}
+                />
+              );
+            }
+
+            if (key === 'mealFrequency') {
+              return (
+                <CustomSelect
+                  key={key}
+                  title="Select Meal Frequency"
+                  values={['2-3 meals', '3-5 meals', '6+ meals']}
+                  onChange={(e) => handleChange({ target: { name: key, value: e } })}
+                  placeholder="Meal Frequency"
                   style={{ display: step === index ? 'block' : 'none' }}
                 />
               );

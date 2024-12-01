@@ -29,9 +29,9 @@ const userHealthSchema = new mongoose.Schema(
       enum: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'],
       required: true,
     },
-    fitnessFrequency: {
+    fitnessExperience: {
       type: String,
-      enum: ['Never', 'Occasionally', 'Regularly'],
+      enum: ['Never', 'Beginner', 'Intermediate', 'Advanced'],
       required: true,
     },
     preferredExerciseTypes: {
