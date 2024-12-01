@@ -1,17 +1,82 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const UserHealthSchema = new mongoose.Schema({
-  weight: { type: Number, required: true },
-  height: { type: Number, required: true },
-  age: { type: Number, required: true },
-  dietType: { type: String, required: true },
-  mealFrequency: { type: String, enum: ['2-3 meals', '3-5 meals', '6+ meals'], required: true },
-  activityLevel: { type: String, enum: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'], required: true },
-  fitnessExperience: { type: String, enum: ['Never', 'Beginner', 'Intermediate', 'Advanced'], required: true },
-  preferredExerciseTypes: { type: [String], default: [] },
-  sleepDuration: { type: Number, required: true },
-  goal: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+const userHealthSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true, 
+      ref: 'User', // Related User Model
+    },
+    weight: {
+      type: Number,
+      required: true,
+    },
+    height: {
+      type: Number,
+      required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    },
+    dietType: {
+      type: String,
+      enum: ['Vegetarian', 'Vegan', 'Keto', 'Other'],
+      required: true,
+    },
+    goal: {
+      type: String,
+      required: true,
+    },
+    activityLevel: {
+      type: String,
+      enum: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'],
+      required: true,
+    },
+    sleepHours: {
+      type: Number,
+      required: true,
+    },
+    waterIntake: {
+      type: Number,
+      required: true,
+    },
+    healthConditions: {
+      type: [String], // Array of strings for multiple conditions
+      default: [],
+    },
+    emotionalState: {
+      type: String,
+      enum: ['Good', 'Average', 'Poor'],
+      required: true,
+    },
+    fitnessFrequency: {
+      type: String,
+      enum: ['Never', 'Occasionally', 'Regularly'],
+      required: true,
+    },
+    dietaryHabits: {
+      type: String,
+      required: true,
+    },
+    bodyFatPercentage: {
+      type: Number,
+      required: false,
+    },
+    heartRate: {
+      type: Number,
+      required: false,
+    },
+    bloodPressure: {
+      type: String,
+      required: false,
+    },
+  },
+  {
+    timestamps: true, 
+  }
+);
 
-module.exports = mongoose.model('UserHealth', UserHealthSchema);
+const UserHealth = mongoose.model('UserHealth', userHealthSchema);
+
+export default UserHealth;
