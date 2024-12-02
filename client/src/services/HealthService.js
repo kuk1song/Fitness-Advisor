@@ -1,48 +1,41 @@
-import DOMPurify from "../../node_modules/dompurify/dist/purify";
-
-const HEALTH_URL = 'http://localhost:5000/api/health'; // backend server
-const USER_URL = 'http://localhost:5000/api/user'; // also backend server
+const BASE_URL = 'http://localhost:5000/health'; 
 
 export const HealthService = {
-    add: async (userData) => {
-        //? +-------------------------+
-        //? | 1. Get the Given Data   |
-        //? +-------------------------+
-        let { email } = userData;
-
-        // If email is empty or not included
-        if (!email) {
-            return false;
+    addHealthData: async (healthData) => {
+      try {
+        // +-------------------------+
+        // | Get the User ID Data    |
+        // +-------------------------+
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('User is not authenticated. Please log in again.');
         }
-        email = DOMPurify.sanitize(email);
-        
-        try {
-            //? +-------------------------+
-            //? | 2.Get the User ID Data  |
-            //? +-------------------------+
-            const userResult = await fetch(USER_URL + `?email=${email}`);
-            const userId = userResult.id;
-            if(!userId) {
-                alert("You haven't been registered yet!");
-                return false;
-            }
-
-
-            //? +-------------------------+
-            //? | 3.Send the Health Data  |
-            //? +-------------------------+
-            console.log(userResult);
-            const result = await fetch(HEALTH_URL, {
-                method: "POST",
-                body: JSON.stringify({userId, ...userData})
-            }); 
-
-            return result;
+  
+        // +-------------------------+
+        // | Send the Health Data    |
+        // +-------------------------+
+        const response = await fetch(`${BASE_URL}/health`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, 
+          },
+          body: JSON.stringify(healthData),
+        });
+  
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to submit health data.');
         }
-        catch (e) {
-            console.error(e);
-            return false;
-        }
+  
+        const data = await response.json();
+        console.log('Health data submitted successfully:', data);
+        return { success: true, data };
+      } catch (error) {
+        console.error('Error submitting health data:', error.message);
+        return { success: false, message: error.message };
+      }
+    },
+  };
 
-    }
-}
+   

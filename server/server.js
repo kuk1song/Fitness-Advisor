@@ -21,7 +21,7 @@ mongoose.connect(`${process.env.MONGO_URI}`)
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/health', healthRoutes, userRoutes);
+app.use('/api', router);
 
 // Start Server
 const PORT = process.env.PORT || 5000; // Use the PORT environment variable if it's defined, otherwise default to port 3000
