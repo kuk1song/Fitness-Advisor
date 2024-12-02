@@ -29,9 +29,11 @@ function UserInfoForm() {
 
   // intialize the inputRefs
   const inputRefs = useRef([]);
+
+  const totalSteps = Object.keys(userData).length;
   
   // check if the current step is the last step
-  const isLastStep = step === Object.keys(userData).length - 1;
+  const isLastStep = step === totalSteps - 1;
   
   // load the user name
   const [userName, setUserName] = useState('');
@@ -50,10 +52,11 @@ function UserInfoForm() {
   };
 
   const handleSubmit = useCallback(async (e) => {
-    if (e) e.preventDefault();  // prevent the default form submission
+    e.preventDefault();  // prevent the default form submission
     if (handlingSubmit) return; // if already handling submit, prevent duplicate submission
     setHandlingSubmit(true);
-
+    
+    // check if any fields are missing
     const missingFields = Object.entries(userData).filter(([key, value]) => !value);
     if (missingFields.length > 0) {
       alert(`Please fill out all fields before submitting: ${missingFields.map(([key]) => key).join(', ')}`);
@@ -64,9 +67,8 @@ function UserInfoForm() {
     try {
       const response = await HealthService.add(userData); // submit the health data to the Atlas
       if (!response.success) throw new Error('Failed to submit data');
-  
       alert('Health data successfully submitted!');
-      navigate('/calendar'); // Redirect on success
+      navigate('/calendar'); 
     } catch (error) {
       console.error('Submission error:', error);
       alert('An error occurred while submitting the data. Please try again.');
@@ -87,12 +89,12 @@ function UserInfoForm() {
         return;
       }
 
+      setStep((prev) => prev + 1);
+
       // auto focus to the next input
       setTimeout(() => {
         inputRefs.current[step + 1]?.focus();
       }, 10);
-  
-      setStep((prev) => prev + 1);
     }
   }, [step, userData]);
 
@@ -186,16 +188,25 @@ function UserInfoForm() {
           >
             Back
           </button>
-           {isLastStep ? (
-            <button type="submit" className="submit">
-               {handlingSubmit ? 'Submitting...' : 'Submit'}
-             </button>
-          ) : (
-          <button type="button" className="action next" onClick={nextStep}>
-            Next
-          </button>
-          )}
+          {step < totalSteps - 1 ? (
+            <button
+              type="button"
+              className="action next"
+              onClick={nextStep}
+            >
+              Next
+            </button>
+          ) : null}
         </div>
+        {/* Submit button, only displayed when on the last step */}
+        {step === totalSteps - 1 && (
+          <button
+            type="submit"
+            className="submit"
+          >
+            {handlingSubmit ? 'Submitting...' : 'Submit'}
+          </button>
+        )}
       </form>
       <Link to="/" className="homepage-button">
         Menu
