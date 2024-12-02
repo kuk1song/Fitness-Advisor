@@ -7,17 +7,31 @@ function CustomSelect({ title, values, onChange, className = "", style = "" }) {
     const [pickedText, setPickedText] = useState("");
 
     function handleSelect(e) {
+        const selectedValue = e.target.getAttribute('value');
         setPickedText(e.target.textContent);
         setOpen(false);
-        onChange(e);
+        onChange(selectedValue); // Pass the selected value instead of the event
     }
 
-    return (<div className={className + ' custom-select'} style={style}>
-        <button type="button" className={className} onClick={() => { setOpen(!isOpen); }}>{pickedText === "" ? title : pickedText}</button>
-        <div className={className + ' list-select'} style={{ visibility: isOpen ? "visible" : "collapse" }}>
-            {values.map(value => <button type="button" onClick={handleSelect} key={value} name={"dietType"} value={value.toString().toLowerCase()}>{value}</button>)}
+    return (
+        <div className={className + ' custom-select'} style={style}>
+            <button type="button" className={className} onClick={() => { setOpen(!isOpen); }}>
+                {pickedText === "" ? title : pickedText}
+            </button>
+            <div className={className + ' list-select'} style={{ visibility: isOpen ? "visible" : "collapse" }}>
+                {values.map(value => (
+                    <button
+                        type="button"
+                        onClick={handleSelect}
+                        key={value}
+                        value={value.toString().toLowerCase()}
+                    >
+                        {value}
+                    </button>
+                ))}
+            </div>
         </div>
-    </div>)
+    );
 }
 
 export default CustomSelect;

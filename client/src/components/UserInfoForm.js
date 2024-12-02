@@ -65,7 +65,8 @@ function UserInfoForm() {
     }
 
     try {
-      const response = await HealthService.add(userData); // submit the health data to the Atlas
+      console.log('Submitting userData:', userData);
+      const response = await HealthService.health(userData); // submit the health data to the Atlas
       if (!response.success) throw new Error('Failed to submit data');
       alert('Health data successfully submitted!');
       navigate('/calendar'); 
@@ -131,6 +132,10 @@ function UserInfoForm() {
     setUserData({ ...userData, [name]: value });
   };
 
+  const handleSelectChange = (name, value) => {
+    setUserData({ ...userData, [name]: value });
+  };
+
   return (
     <>
       <div className="bg bg-dataform"></div>
@@ -156,7 +161,8 @@ function UserInfoForm() {
                   key={key}
                   title={`Select ${key}`}
                   values={options[key]}
-                  onChange={(value) => handleChange({ target: { name: key, value } })}
+                  value={userData[key]}
+                  onChange={(selectedValue) => handleSelectChange(key, selectedValue)}
                   placeholder={`Select ${key}`}
                   style={{ display: step === index ? 'block' : 'none' }}
                 />

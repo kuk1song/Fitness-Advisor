@@ -1,12 +1,15 @@
 import express from 'express';
-import HealthRecord from  '../models/HealthRecord.js';
+import HealthRecord from '../models/HealthRecord.js';
+import authMiddleware from '../middleware/auth.js';
 
-const router = express.Router();
+const healthRoutes = express.Router();
 
 // receive POST request for user health data
-router.post('/health', async (req, res) => {
+healthRoutes.post('/', authMiddleware, async (req, res) => {
+
+  console.log('Health route accessed');
+  console.log('Request body:', req.body); 
   const {
-    userId, // need to be passed in the request body
     weight,
     height,
     age,
@@ -22,7 +25,7 @@ router.post('/health', async (req, res) => {
   try {
     // create a new health record
     const healthRecord = new HealthRecord({
-      userId,
+      userId: req.user.userId, // use the userId from the authenticated user
       weight,
       height,
       age,
@@ -35,12 +38,15 @@ router.post('/health', async (req, res) => {
       goal,
     });
 
-    await healthRecord.save(); // save the health data to the database
-    res.status(200).json({ message: 'Health data successfully uploaded!' });
+    // save the health record to the database
+    await healthRecord.save();
+
+    // send a success response
+    res.status(201).json({ message: 'Health data successfully submitted', data: healthRecord });
   } catch (error) {
-    console.error('Error uploading health data:', error);
-    res.status(500).json({ message: 'Error uploading health data' });
+    console.error('Error saving health data:', error);
+    res.status(500).json({ message: 'Failed to submit health data', error: error.message });
   }
 });
 
-export default router;
+export default healthRoutes;
