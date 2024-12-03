@@ -21,7 +21,7 @@ mongoose.connect(`${process.env.MONGO_URI}`)
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/health', healthRoutes); // Use healthRoutes instead of router
+app.use('/health', healthRoutes); // healthRoutes is the router object exported from health.js
 app.use('/user', userRoutes);
 
 // Start Server

@@ -4,11 +4,10 @@ import authMiddleware from '../middleware/auth.js';
 
 const healthRoutes = express.Router();
 
-// receive POST request for user health data
-healthRoutes.post('/', authMiddleware, async (req, res) => {
+healthRoutes.post('/', async (req, res) => { // POST /health
 
   console.log('Health route accessed');
-  console.log('Request body:', req.body); 
+  console.log('Request body:', req); 
   const {
     weight,
     height,
@@ -25,7 +24,7 @@ healthRoutes.post('/', authMiddleware, async (req, res) => {
   try {
     // create a new health record
     const healthRecord = new HealthRecord({
-      userId: req.user.userId, // use the userId from the authenticated user
+      // userId: req.user.userId, // use the userId from the authenticated user
       weight,
       height,
       age,

@@ -66,7 +66,7 @@ authRoutes.post('/login', async (req, res) => {
 authRoutes.get('/user', authMiddleware, async (req, res) => {
   try {
   
-    console.log("Decoded token:", req.user);
+    // console.log("Decoded token:", req.user);
     
     const user = await User.findById(req.user.userId).select('name email'); 
     if (!user) {

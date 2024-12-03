@@ -66,7 +66,7 @@ function UserInfoForm() {
 
     try {
       console.log('Submitting userData:', userData);
-      const response = await HealthService.health(userData); // submit the health data to the Atlas
+      const response = await HealthService.healthInfo(userData); // submit the health data to the Atlas
       if (!response.success) throw new Error('Failed to submit data');
       alert('Health data successfully submitted!');
       navigate('/calendar'); 

@@ -4,7 +4,7 @@ const userHealthSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true, 
+      required: false, 
       ref: 'User', // related User Model
     },
     weight: {
@@ -21,17 +21,17 @@ const userHealthSchema = new mongoose.Schema(
     },
     dietType: {
       type: String,
-      enum: ['Vegetarian', 'Vegan', 'Keto', 'Other'],
+      enum: ['vegetarian', 'vegan', 'keto', 'other'],
       required: true,
     },
     activityLevel: {
       type: String,
-      enum: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'],
+      enum: ['sedentary', 'lightly active', 'moderately active', 'very active'],
       required: true,
     },
     fitnessExperience: {
       type: String,
-      enum: ['Never', 'Beginner', 'Intermediate', 'Advanced'],
+      enum: ['never', 'beginner', 'intermediate', 'advanced'],
       required: true,
     },
     preferredExerciseTypes: {
@@ -49,7 +49,7 @@ const userHealthSchema = new mongoose.Schema(
     },
     goal: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {

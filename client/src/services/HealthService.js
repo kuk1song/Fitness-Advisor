@@ -1,7 +1,7 @@
 const BASE_URL = 'http://localhost:5000'; 
 
 export const HealthService = {
-  health: async (healthData) => {
+  healthInfo: async (healthData) => {
     try {
       // +-------------------------+
       // | Get the User ID Data    |
@@ -14,7 +14,7 @@ export const HealthService = {
       // +-------------------------+
       // | Send the Health Data    |
       // +-------------------------+
-      const response = await fetch(`${BASE_URL}/health`, {
+      const response = await fetch(`${BASE_URL}/health`, { // POST /health
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
