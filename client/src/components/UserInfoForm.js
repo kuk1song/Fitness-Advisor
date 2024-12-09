@@ -43,9 +43,12 @@ function UserInfoForm() {
       if (user) {
         setUserName(user.name);
       }
+      else {
+        navigate("/logout");
+      }
     }
     loadUserName();
-  }, []);
+  }, [navigate]);
 
   const backStep = () => {
     if (step > 0) setStep(step - 1);
@@ -141,7 +144,8 @@ function UserInfoForm() {
       <div className="bg bg-dataform"></div>
       <form
         onSubmit={handleSubmit}
-        style={{ textAlign: 'center', marginTop: '20px' }}>
+        style={{ textAlign: 'center', marginTop: '20px' }}
+        className='user-info-form'>
         <h1>Hi, {userName || 'Guest'}!</h1>
         <h1 className="question">What is your {Object.keys(userData)[step]}?</h1>
         <p className="count">
@@ -149,6 +153,27 @@ function UserInfoForm() {
         </p>
         <div className="input-field-container">
           {Object.keys(userData).map((key, index) => {
+            // ======= change from 'camelCase' to 'Title Case' ========
+            let space = true
+            let result = ""
+            for (let index = 0; index < key.length; index++) {
+              const char = key.charAt(index);
+              // If the current character is upper case and before this is not space
+              if(char === char.toUpperCase() && !space) {
+                result += " "+char;
+              }
+              else {
+                result += char;
+              }
+              
+              if(char === " ") {
+                space = true;
+              }
+              else {
+                space = false;
+              }
+            }
+            key = result;
              if (key === 'dietType' || key === 'activityLevel' || key === 'fitnessExperience' || key === 'mealFrequency') {
               const options = {
                 dietType: ['Vegetarian', 'Vegan', 'Keto', 'Other'],

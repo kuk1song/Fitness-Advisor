@@ -70,6 +70,7 @@ export const AuthService = {
       } else {
         throw new Error(`Failed to fetch user data: ${response.statusText}`);
       }
+      return false;
     }
 
     const data = await response.json();
