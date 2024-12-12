@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import '../styles/DataForm.css';
 import '../styles/Background.css';
+import { camelToTitle } from '../functions/case_functions';
 
 function UserInfoForm() {
   const navigate = useNavigate();
@@ -146,34 +147,17 @@ function UserInfoForm() {
         onSubmit={handleSubmit}
         style={{ textAlign: 'center', marginTop: '20px' }}
         className='user-info-form'>
-        <h1>Hi, {userName || 'Guest'}!</h1>
-        <h1 className="question">What is your {Object.keys(userData)[step]}?</h1>
-        <p className="count">
+        {step==0?<h1>Hi, {userName || 'Guest'}!</h1>:''}
+        <h1 className="question">What is your {camelToTitle(Object.keys(userData)[step])}?</h1>
+        {step==0?<p className='info'>(in kg)</p>:(step==1?<p className='info'>(in cm)</p>:'')}
+        <p className="count" style={{marginTop: "20px"}}>
           <span>{step + 1} </span>/{Object.keys(userData).length}
         </p>
         <div className="input-field-container">
           {Object.keys(userData).map((key, index) => {
             // ======= change from 'camelCase' to 'Title Case' ========
-            let space = true
-            let result = ""
-            for (let index = 0; index < key.length; index++) {
-              const char = key.charAt(index);
-              // If the current character is upper case and before this is not space
-              if(char === char.toUpperCase() && !space) {
-                result += " "+char;
-              }
-              else {
-                result += char;
-              }
-              
-              if(char === " ") {
-                space = true;
-              }
-              else {
-                space = false;
-              }
-            }
-            key = result;
+            let result = camelToTitle(key);
+
              if (key === 'dietType' || key === 'activityLevel' || key === 'fitnessExperience' || key === 'mealFrequency') {
               const options = {
                 dietType: ['Vegetarian', 'Vegan', 'Keto', 'Other'],
@@ -184,11 +168,11 @@ function UserInfoForm() {
               return (
                 <CustomSelect
                   key={key}
-                  title={`Select ${key}`}
+                  title={`Select ${result}`}
                   values={options[key]}
                   value={userData[key]}
                   onChange={(selectedValue) => handleSelectChange(key, selectedValue)}
-                  placeholder={`Select ${key}`}
+                  placeholder={`Select ${result}`}
                   style={{ display: step === index ? 'block' : 'none' }}
                 />
               );
@@ -202,7 +186,7 @@ function UserInfoForm() {
                 name={key}
                 value={userData[key]}
                 onChange={handleChange}
-                placeholder={`Enter ${key}`}
+                placeholder={`Enter ${result}`}
                 style={{
                   display: step === index ? 'block' : 'none',
                 }}
