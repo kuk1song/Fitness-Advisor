@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function InputWithDynamicColor({ name, placeholder, value, onChange }) {
+function InputWithDynamicColor({ type, name, placeholder, value, onChange }) {
   const [color, setColor] = useState('black');
 
   const handleFocus = () => setColor('#0044cc');  // focus color: blue
@@ -8,7 +8,7 @@ function InputWithDynamicColor({ name, placeholder, value, onChange }) {
 
   return (
     <input 
-        type="text"
+        type={type}
         name={name}
         placeholder={placeholder}
         value={value}
