@@ -147,9 +147,9 @@ function UserInfoForm() {
         onSubmit={handleSubmit}
         style={{ textAlign: 'center', marginTop: '20px' }}
         className='user-info-form'>
-        {step==0?<h1>Hi, {userName || 'Guest'}!</h1>:''}
+        {step===0?<h1>Hi, {userName || 'Guest'}!</h1>:''}
         <h1 className="question">What is your {camelToTitle(Object.keys(userData)[step])}?</h1>
-        {step==0?<p className='info'>(in kg)</p>:(step==1?<p className='info'>(in cm)</p>:'')}
+        {step===0?<p className='info'>(in kg)</p>:(step===1?<p className='info'>(in cm)</p>:'')}
         <p className="count" style={{marginTop: "20px"}}>
           <span>{step + 1} </span>/{Object.keys(userData).length}
         </p>
