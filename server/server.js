@@ -5,24 +5,34 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import healthRoutes from './routes/health.js';
 import userRoutes from './routes/user.js';
+import authMiddleware from './middleware/auth.js';
 
 dotenv.config();
 
+// Create an Express instance
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// Configure middleware
+app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(express.json());  // Parse JSON bodies
 
 // MongoDB connection setup
 mongoose.connect(`${process.env.MONGO_URI}`)
 .then(() => console.log("Connected to DB"))
-.catch(console.error);
+    .catch(console.error);
+
+// Error handler middleware
+const errorHandler = (err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+};    
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/health', healthRoutes); // healthRoutes is the router object exported from health.js
-app.use('/user', userRoutes);
+app.use('/health', authMiddleware, healthRoutes); // healthRoutes is the router object exported from health.js
+app.use('/user', authMiddleware, userRoutes);
+
+app.use(errorHandler);
 
 // Start Server
 const PORT = process.env.PORT || 5000; // Use the PORT environment variable if it's defined, otherwise default to port 5000
