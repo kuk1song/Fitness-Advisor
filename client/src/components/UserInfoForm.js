@@ -7,23 +7,32 @@ import { useNavigate } from 'react-router-dom';
 
 import '../styles/DataForm.css';
 import '../styles/Background.css';
-import { camelToTitle } from '../functions/case_functions';
+// import { camelToTitle } from '../functions/case_functions';
 
 function UserInfoForm() {
   const navigate = useNavigate();
+  
+  // Define the form fields
+  const FORM_FIELDS = {
+    weight: { type: 'number', label: 'Weight', unit: 'kg' },
+    height: { type: 'number', label: 'Height', unit: 'cm' },
+    age: { type: 'number', label: 'Age', unit: '' },
+    dietType: { type: 'select', label: 'Diet Type', options: ['Vegetarian', 'Vegan', 'Keto', 'Other'] },
+    activityLevel: { type: 'select', label: 'Activity Level', options: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'] },
+    fitnessExperience: { type: 'select', label: 'Fitness Experience', options: ['Never', 'Beginner', 'Intermediate', 'Advanced'] },
+    mealFrequency: { type: 'select', label: 'Meal Frequency', options: ['2-3 meals', '3-5 meals', '6+ meals'] },
+    sleepHours: { type: 'number', label: 'Sleep Hours', unit: 'hours' },
+    goal: { type: 'text', label: 'Goal' },
+  };
 
-  const [userData, setUserData] = useState({
-    weight: '',
-    height: '',
-    age: '',
-    dietType: '',
-    activityLevel: '',
-    fitnessExperience: '',
-    preferredExerciseTypes: '',
-    mealFrequency: '',
-    sleepHours: '',
-    goal: '',
-  });
+  // Generate initial user data from FORM_FIELDS
+  const initialUserData = Object.keys(FORM_FIELDS).reduce((acc, key) => {
+    acc[key] = '';
+    return acc;
+  }, {});
+
+  // Use the generated initial state
+  const [userData, setUserData] = useState(initialUserData);
 
   const [step, setStep] = useState(0); // used to check which step is currently on
   const [handlingSubmit, setHandlingSubmit] = useState(false); // used to check if is currently handling submit or not...
@@ -51,128 +60,125 @@ function UserInfoForm() {
     loadUserName();
   }, [navigate]);
 
-  const backStep = () => {
-    if (step > 0) setStep(step - 1);
-  };
+  const backStep = useCallback(() => {
+    if (step > 0) setStep(prev => prev - 1);
+  }, [step]);
 
+  // Initialize error state
+  const [errors, setErrors] = useState({});
+
+  // Handle the submit of the form
   const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();  // prevent the default form submission
-    if (handlingSubmit) return; // if already handling submit, prevent duplicate submission
-    setHandlingSubmit(true);
+    e.preventDefault();
+    if (handlingSubmit) return;
     
-    // check if any fields are missing
-    const missingFields = Object.entries(userData).filter(([key, value]) => !value);
-    if (missingFields.length > 0) {
-      alert(`Please fill out all fields before submitting: ${missingFields.map(([key]) => key).join(', ')}`);
-      setHandlingSubmit(false);
-      return;
-    }
-
     try {
-      console.log('Submitting userData:', userData);
-      const response = await HealthService.healthInfo(userData); // submit the health data to the Atlas
-      if (!response.success) throw new Error('Failed to submit data');
-      alert('Health data successfully submitted!');
-      navigate('/calendar'); 
+      setHandlingSubmit(true);
+      const response = await HealthService.healthInfo(userData);
+      if (!response.success) throw new Error(response.message);
+      navigate('/calendar');
     } catch (error) {
-      console.error('Submission error:', error);
-      alert('An error occurred while submitting the data. Please try again.');
+      setErrors({ submit: error.message });
     } finally {
       setHandlingSubmit(false);
     }
   }, [userData, handlingSubmit, navigate]);
 
   const nextStep = useCallback(() => {
-    const totalSteps = Object.keys(userData).length;
-    
-    if (step < totalSteps - 1 ) {
-      const currentKey = Object.keys(userData)[step];
-      const currentValue = userData[currentKey];
-      
-      if (!currentValue) {
-        alert(`Please fill out: ${currentKey}`);
-        return;
-      }
+    if (step < totalSteps - 1) {
+        const currentKey = Object.keys(userData)[step];
+        const currentValue = userData[currentKey];
+        
+        if (!currentValue) {
+            alert(`Please fill out: ${currentKey}`);
+            return;
+        }
 
-      setStep((prev) => prev + 1);
+        setStep(prev => prev + 1);
 
-      // auto focus to the next input
-      setTimeout(() => {
-        inputRefs.current[step + 1]?.focus();
-      }, 10);
+        setTimeout(() => {
+            inputRefs.current[step + 1]?.focus();
+        }, 10);
     }
-  }, [step, userData]);
+  }, [step, userData, totalSteps]);
 
   useEffect(() => {
-    const handleEnter = (e) => {
-      // ensure nextStep is only called once per Enter press
-      if (e.key === "Enter") {
-        e.preventDefault();
-        if (isLastStep) {
-          // if it is the last step, focus on the submit button
-          document.querySelector('.submit')?.focus();
-        } else {
-          nextStep();
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            if (isLastStep) {
+                document.querySelector('.submit')?.focus();
+            } else {
+                nextStep();
+            }
+        } else if (e.key === "Escape") {
+            backStep();
         }
-      }
     };
 
-    document.addEventListener('keydown', handleEnter);
-
-    // remove event listener to avoid duplication
-    return () => {
-      document.removeEventListener('keydown', handleEnter)
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [isLastStep, nextStep, backStep]);
+  
+  // Validate the health info fields input by the user
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'weight':
+        return value >= 0 && value < 300;
+      case 'height':
+        return value >= 0 && value < 300;
+      case 'age':
+        return value >= 0 && value < 150;
+      default:
+        return true;
     }
-  }, [nextStep, isLastStep]);
+  };
 
+  // Handle the change of the input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // it makes the user can put an empty value in order to let them insert another number. (if not it the first number can't be erased! You can try it by yourself. At least it is like that in my case..)
-    if ((name === "weight" || name === "height" || name === "age") && (value < 1) && value !== "" && isNaN(value)) {
-      console.error(`${name} should be a number.`);
+    if (!validateField(name, value)) {
       return;
     }
     setUserData({ ...userData, [name]: value });
   };
 
+  // Handle the change of the select fields
   const handleSelectChange = (name, value) => {
     setUserData({ ...userData, [name]: value });
   };
 
+  // Render the form
   return (
     <>
       <div className="bg bg-dataform"></div>
-      <form
-        onSubmit={handleSubmit}
-        style={{ textAlign: 'center', marginTop: '20px' }}
-        className='user-info-form'>
-        {step===0?<h1>Hi, {userName || 'Guest'}!</h1>:''}
-        <h1 className="question">What is your {camelToTitle(Object.keys(userData)[step])}?</h1>
-        {step===0?<p className='info'>(in kg)</p>:(step===1?<p className='info'>(in cm)</p>:'')}
+      <form onSubmit={handleSubmit} className='user-info-form'>
+        {step === 0 && <h1>Hi, {userName || 'Guest'}!</h1>}
+        <h1 className="question">
+          {FORM_FIELDS[Object.keys(userData)[step]].label}?
+        </h1>
+        {FORM_FIELDS[Object.keys(userData)[step]].unit && (
+          <p className='info'>
+            (in {FORM_FIELDS[Object.keys(userData)[step]].unit})
+          </p>
+        )}
+        
         <p className="count" style={{marginTop: "20px"}}>
           <span>{step + 1} </span>/{Object.keys(userData).length}
         </p>
         <div className="input-field-container">
           {Object.keys(userData).map((key, index) => {
-            // ======= change from 'camelCase' to 'Title Case' ========
-            let result = camelToTitle(key);
-
-             if (key === 'dietType' || key === 'activityLevel' || key === 'fitnessExperience' || key === 'mealFrequency') {
-              const options = {
-                dietType: ['Vegetarian', 'Vegan', 'Keto', 'Other'],
-                activityLevel: ['Sedentary', 'Lightly active', 'Moderately active', 'Very active'],
-                fitnessExperience: ['Never', 'Beginner', 'Intermediate', 'Advanced'],
-                mealFrequency: ['2-3 meals', '3-5 meals', '6+ meals'],
-              };
+            const field = FORM_FIELDS[key];
+            
+            if (field.type === 'select') {
               return (
                 <CustomSelect
                   key={key}
-                  title={`Select ${result}`}
-                  values={options[key]}
+                  title={`Select ${field.label}`}
+                  values={field.options}
                   value={userData[key]}
                   onChange={(selectedValue) => handleSelectChange(key, selectedValue)}
-                  placeholder={`Select ${result}`}
+                  placeholder={`Select ${field.label}`}
                   style={{ display: step === index ? 'block' : 'none' }}
                 />
               );
@@ -182,11 +188,11 @@ function UserInfoForm() {
               <input
                 key={key}
                 ref={(el) => (inputRefs.current[index] = el)}
-                type={key === 'goal' ? 'text' : 'number'}
+                type={field.type}
                 name={key}
                 value={userData[key]}
                 onChange={handleChange}
-                placeholder={`Enter ${result}`}
+                placeholder={`Enter ${field.label}`}
                 style={{
                   display: step === index ? 'block' : 'none',
                 }}
@@ -213,14 +219,23 @@ function UserInfoForm() {
             </button>
           ) : null}
         </div>
+        
         {/* Submit button, only displayed when on the last step */}
         {step === totalSteps - 1 && (
           <button
             type="submit"
             className="submit"
+            disabled={handlingSubmit}
           >
             {handlingSubmit ? 'Submitting...' : 'Submit'}
           </button>
+        )}
+
+        {/* Display error messages */}
+        {errors.submit && (
+          <div className="error-message">
+            {errors.submit}
+          </div>
         )}
       </form>
       <Link to="/" className="homepage-button">
