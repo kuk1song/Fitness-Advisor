@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000'; 
+const BASE_URL = 'http://localhost:5000/api'; 
 
 export const HealthService = {
   healthInfo: async (healthData) => {
@@ -14,32 +14,25 @@ export const HealthService = {
       // +-------------------------+
       // | Send the Health Data    |
       // +-------------------------+
-      const response = await fetch(`${BASE_URL}/health`, { // POST /health
+      const response = await fetch(`${BASE_URL}/health`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, 
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(healthData),
+        body: JSON.stringify(healthData)
       });
 
       if (!response.ok) {
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to submit health data.');
-        } else {
-          const errorText = await response.text();
-          throw new Error(errorText || 'Failed to submit health data.');
-        }
+        const errorData = await response.json().catch(e => ({ message: 'No JSON response' }));
+        console.log('Error data:', errorData);
+        throw new Error('(Frontend) Failed to submit health data');
       }
 
-      const data = await response.json();
-      console.log('Health data submitted successfully:', data);
-      return { success: true, data };
+      return await response.json();
     } catch (error) {
-      console.error('Error submitting health data:', error.message);
-      return { success: false, message: error.message };
+      console.error('(Frontend) Error:', error);
+      throw error;
     }
-  },
+  }
 };

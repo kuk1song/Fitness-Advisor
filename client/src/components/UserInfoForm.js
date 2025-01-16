@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import CustomSelect from './CustomSelect';
 import { AuthService } from '../services/AuthService';
@@ -13,7 +13,7 @@ function UserInfoForm() {
   const navigate = useNavigate();
   
   // Define the form fields
-  const FORM_FIELDS = {
+  const FORM_FIELDS = useMemo(() => ({
     weight: { type: 'number', label: 'Weight', unit: 'kg' },
     height: { type: 'number', label: 'Height', unit: 'cm' },
     age: { type: 'number', label: 'Age', unit: '' },
@@ -23,7 +23,7 @@ function UserInfoForm() {
     mealFrequency: { type: 'select', label: 'Meal Frequency', options: ['2-3 meals', '3-5 meals', '6+ meals'] },
     sleepHours: { type: 'number', label: 'Sleep Hours', unit: 'hours' },
     goal: { type: 'text', label: 'Goal' },
-  };
+  }), []); 
 
   // Generate initial user data from FORM_FIELDS
   const initialUserData = Object.keys(FORM_FIELDS).reduce((acc, key) => {
@@ -41,6 +41,14 @@ function UserInfoForm() {
   const inputRefs = useRef([]);
 
   const totalSteps = Object.keys(userData).length;
+
+   // Initialize error state
+   const [errors, setErrors] = useState({});
+
+   // Handle the error
+   const handleError = useCallback((message) => {
+     setErrors({ submit: message });
+   }, []);
   
   // check if the current step is the last step
   const isLastStep = step === totalSteps - 1;
@@ -64,8 +72,25 @@ function UserInfoForm() {
     if (step > 0) setStep(prev => prev - 1);
   }, [step]);
 
-  // Initialize error state
-  const [errors, setErrors] = useState({});
+  // Handle the next step of the form
+  const nextStep = useCallback(() => {
+    if (step < totalSteps - 1) {
+        const currentKey = Object.keys(userData)[step];
+        const currentValue = userData[currentKey];
+        
+        if (!currentValue) {
+            handleError(`Please fill out: ${FORM_FIELDS[currentKey].label}`);
+            return;
+        }
+
+        setErrors({}); // clear the error
+        setStep(prev => prev + 1);
+
+        setTimeout(() => {
+            inputRefs.current[step + 1]?.focus();
+        }, 10);
+    }
+  }, [step, totalSteps, userData, handleError, FORM_FIELDS]);
 
   // Handle the submit of the form
   const handleSubmit = useCallback(async (e) => {
@@ -74,6 +99,7 @@ function UserInfoForm() {
     
     try {
       setHandlingSubmit(true);
+      // Calling HealthService API to submit the health info to backend
       const response = await HealthService.healthInfo(userData);
       if (!response.success) throw new Error(response.message);
       navigate('/calendar');
@@ -83,24 +109,6 @@ function UserInfoForm() {
       setHandlingSubmit(false);
     }
   }, [userData, handlingSubmit, navigate]);
-
-  const nextStep = useCallback(() => {
-    if (step < totalSteps - 1) {
-        const currentKey = Object.keys(userData)[step];
-        const currentValue = userData[currentKey];
-        
-        if (!currentValue) {
-            alert(`Please fill out: ${currentKey}`);
-            return;
-        }
-
-        setStep(prev => prev + 1);
-
-        setTimeout(() => {
-            inputRefs.current[step + 1]?.focus();
-        }, 10);
-    }
-  }, [step, userData, totalSteps]);
 
   useEffect(() => {
     const handleKeyPress = (e) => {

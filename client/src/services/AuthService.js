@@ -1,9 +1,9 @@
-const BASE_URL = 'http://localhost:5000/auth'; // Define the base URL for the API
+const BASE_URL = 'http://localhost:5000'; // Define the base URL for the API
 
 export const AuthService = {
   register: async (userData) => {
     try {
-      const response = await fetch(`${BASE_URL}/register`, {
+      const response = await fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const AuthService = {
 
   login: async (credentials) => {
     try {
-      const response = await fetch(`${BASE_URL}/login`, {
+      const response = await fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,32 +53,34 @@ export const AuthService = {
   },
 
   getUser: async () => {
-    const token = localStorage.getItem('token');
+    try {
+      const token = localStorage.getItem('token');
+      console.log('Using token:', token); 
 
-  try {
-    const response = await fetch(`${BASE_URL}/user`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+      if (!token) {
+        throw new Error('No token found');
       }
-    });
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        console.warn('Token expired or invalid. Logging out...');
-      } else {
-        throw new Error(`Failed to fetch user data: ${response.statusText}`);
+      const response = await fetch(`${BASE_URL}/auth/user`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch user data');
       }
-      return false;
+
+      const data = await response.json();
+      console.log('User data received:', data); 
+      return data;
+    } catch (error) {
+      console.error('Detailed error:', error);
+      throw error;
     }
-
-    const data = await response.json();
-    console.log('User data:', data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching user data:', error.message);
-  }
   },
   
 };

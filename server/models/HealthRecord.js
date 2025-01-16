@@ -4,15 +4,23 @@ const userHealthSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: false, 
+      required: true, 
       ref: 'User', // related User Model
     },
+    userEmail: {
+      type: String,
+      required: true,
+    },
+    userName: {
+      type: String,
+      required: true,
+    },
     weight: {
-      type: Number,
+      type: String,
       required: true,
     },
     height: {
-      type: Number,
+      type: String,
       required: true,
     },
     age: {

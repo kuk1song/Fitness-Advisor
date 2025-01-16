@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import authMiddleware from '../middleware/auth.js';
+import { authenticateToken } from '../middleware/auth.js';
 
 const authRoutes = express.Router();
 
@@ -63,21 +63,35 @@ authRoutes.post('/login', async (req, res) => {
 });
 
 
-authRoutes.get('/user', authMiddleware, async (req, res) => {
-  try {
-  
-    // console.log("Decoded token:", req.user);
-    
-    const user = await User.findById(req.user.userId).select('name email'); 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+authRoutes.get('/user', authenticateToken, async (req, res) => {
+    try {
+        console.log('User route accessed');
+        console.log('User from token:', req.user);
 
-    res.json({ name: user.name, email: user.email });
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    res.status(500).json({ message: 'Server error. Please try again later.' });
-  }
+        if (!req.user) {
+            return res.status(404).json({ 
+                success: false, 
+                message: 'User not found' 
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            user: {
+                id: req.user._id,
+                email: req.user.email,
+                name: req.user.name
+            }
+        });
+
+    } catch (error) {
+        console.error('Error in /user route:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error fetching user data',
+            error: error.message 
+        });
+    }
 });
 
 export default authRoutes;

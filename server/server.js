@@ -4,39 +4,45 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import healthRoutes from './routes/health.js';
-import userRoutes from './routes/user.js';
-import authMiddleware from './middleware/auth.js';
+import { authenticateToken } from './middleware/auth.js';
 
 dotenv.config();
 
-// Create an Express instance
 const app = express();
 
-// Configure middleware
-app.use(cors()); // Enable Cross-Origin Resource Sharing
-app.use(express.json());  // Parse JSON bodies
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-// MongoDB connection setup
-mongoose.connect(`${process.env.MONGO_URI}`)
-.then(() => console.log("Connected to DB"))
-    .catch(console.error);
+// Configure logging middleware
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+    next();
+});
 
-// Error handler middleware
-const errorHandler = (err, req, res, next) => {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-};    
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
-// Routes
-app.use('/auth', authRoutes);
-app.use('/health', authMiddleware, healthRoutes); // healthRoutes is the router object exported from health.js
-app.use('/user', authMiddleware, userRoutes);
+// Register routes
+app.use('/auth', authRoutes);  // Ensure this route is correctly registered
+app.use('/api/health', authenticateToken, healthRoutes);
 
-app.use(errorHandler);
+// 404 error handling
+app.use((req, res) => {
+    console.log('404 - Route not found:', req.method, req.path);
+    res.status(404).json({ 
+        success: false, 
+        message: `Route not found: ${req.method} ${req.path}` 
+    });
+});
 
-// Start Server
-const PORT = process.env.PORT || 5000; // Use the PORT environment variable if it's defined, otherwise default to port 5000
-
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
+    console.log('Available routes:');
+    console.log('- POST /auth/login');
+    console.log('- POST /auth/register');
+    console.log('- GET  /auth/user');
 });
