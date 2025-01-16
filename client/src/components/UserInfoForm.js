@@ -107,6 +107,7 @@ function UserInfoForm() {
       setErrors({ submit: error.message });
     } finally {
       setHandlingSubmit(false);
+      setIsLoading(false);
     }
   }, [userData, handlingSubmit, navigate]);
 
@@ -155,6 +156,8 @@ function UserInfoForm() {
   const handleSelectChange = (name, value) => {
     setUserData({ ...userData, [name]: value });
   };
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // Render the form
   return (
@@ -233,9 +236,9 @@ function UserInfoForm() {
           <button
             type="submit"
             className="submit"
-            disabled={handlingSubmit}
+            disabled={isLoading || handlingSubmit}
           >
-            {handlingSubmit ? 'Submitting...' : 'Submit'}
+            {isLoading ? 'Loading...' : 'Submit'}
           </button>
         )}
 
