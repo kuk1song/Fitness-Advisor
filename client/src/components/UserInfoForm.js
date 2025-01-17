@@ -210,7 +210,7 @@ function UserInfoForm() {
         <div className="bg bg-dataform"></div>
         <div className="user-info-display">
           <h1>Welcome back, {userName}!</h1>
-          <h2>Your Health Information</h2>
+          <h3>Your Health Data</h3>
           
           <div className="health-info-container">
             {[
