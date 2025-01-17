@@ -11,7 +11,12 @@ import '../styles/Background.css';
 
 function UserInfoForm() {
   const navigate = useNavigate();
-  
+  const [existingData, setExistingData] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   // Define the form fields
   const FORM_FIELDS = useMemo(() => ({
     weight: { type: 'number', label: 'Weight', unit: 'kg' },
@@ -54,7 +59,6 @@ function UserInfoForm() {
   const isLastStep = step === totalSteps - 1;
   
   // load the user name
-  const [userName, setUserName] = useState('');
   useEffect(() => {
     async function loadUserName() {
       const user = await AuthService.getUser();
@@ -159,7 +163,96 @@ function UserInfoForm() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // Render the form
+  // Load the user data
+  useEffect(() => {
+    async function loadUserData() {
+      try {
+        setLoading(true);
+        const userData = await AuthService.getUser();
+        console.log('User data loaded:', userData);
+        
+        if (userData && userData.user) {
+          setUserName(userData.user.name);
+          
+          const healthData = await HealthService.getUserHealth();
+          console.log('Health data loaded:', healthData);
+          
+          if (healthData && healthData.data) {
+            console.log('Setting existing data:', healthData.data); 
+            setExistingData(healthData.data);  // Directly use healthData.data
+            setIsEditing(false);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    loadUserData();
+  }, []);
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
+
+  // Display the existing data
+  if (existingData && !isEditing) {
+    console.log('Rendering with existing data:', existingData); 
+    return (
+      <>
+        <div className="bg bg-dataform"></div>
+        <div className="user-info-display">
+          <h1>Welcome back, {userName}!</h1>
+          <h2>Your Health Information</h2>
+          
+          <div className="health-info-container">
+            {[
+              { key: 'weight', label: 'Weight', unit: 'kg' },
+              { key: 'height', label: 'Height', unit: 'cm' },
+              { key: 'age', label: 'Age', unit: 'years' },
+              { key: 'dietType', label: 'Diet Type' },
+              { key: 'activityLevel', label: 'Activity Level' },
+              { key: 'fitnessExperience', label: 'Fitness Experience' },
+              { key: 'mealFrequency', label: 'Meal Frequency' },
+              { key: 'sleepHours', label: 'Sleep Hours', unit: 'hours' },
+              { key: 'goal', label: 'Goal' }
+            ].map(({ key, label, unit }) => {
+              console.log(`Rendering field ${key}:`, existingData[key]); 
+              return (
+                <div key={key} className="info-item">
+                  <label>{label}:</label>
+                  <span className="info-value">
+                    {existingData[key]} {unit || ''}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        
+        <div className="bottom-buttons">
+          <button 
+            className="edit-button"
+            onClick={() => setIsEditing(true)}
+            aria-label="Edit Health Information"
+          >
+          </button>
+          <Link to="/" className="homepage-button">
+            Menu
+          </Link>
+        </div>
+      </>
+    );
+  }
+
+  // If not editing and no existing data, display the step form
   return (
     <>
       <div className="bg bg-dataform"></div>

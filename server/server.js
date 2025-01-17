@@ -7,14 +7,13 @@ import healthRoutes from './routes/health.js';
 import { authenticateToken } from './middleware/auth.js';
 
 dotenv.config();
-
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Configure logging middleware
+// Request logging middleware
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
     next();
@@ -25,11 +24,11 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// Register routes
-app.use('/auth', authRoutes);  // Ensure this route is correctly registered
-app.use('/api/health', authenticateToken, healthRoutes);
+// Route registration - each route is registered once
+app.use('/auth', authRoutes);
+app.use('/api/health', healthRoutes);  
 
-// 404 error handling
+// 404 handling
 app.use((req, res) => {
     console.log('404 - Route not found:', req.method, req.path);
     res.status(404).json({ 
@@ -45,4 +44,6 @@ app.listen(PORT, () => {
     console.log('- POST /auth/login');
     console.log('- POST /auth/register');
     console.log('- GET  /auth/user');
+    console.log('- GET  /api/health');
+    console.log('- POST /api/health');
 });

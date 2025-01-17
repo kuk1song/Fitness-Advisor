@@ -5,6 +5,7 @@ import { authenticateToken } from '../middleware/auth.js';
 const router = express.Router();
 
 router.post('/', authenticateToken, async (req, res) => {
+    console.log('POST health route handler called');
     try {
         console.log('Health route accessed');
         console.log('User from token:', req.user);
@@ -50,6 +51,40 @@ router.post('/', authenticateToken, async (req, res) => {
         res.status(500).json({
             success: false,
             message: '(Backend: To MongoDB) Failed to submit health data',
+            error: error.message
+        });
+    }
+});
+
+// GET route - Get user health data
+router.get('/', authenticateToken, async (req, res) => {
+    console.log('GET health route handler called');
+    try {
+        console.log('GET health route accessed');
+        console.log('User from token:', req.user);
+
+        const healthRecord = await HealthRecord.findOne({ 
+            userId: req.user._id 
+        }).sort({ createdAt: -1 });  // Retrieve the latest record
+
+        if (!healthRecord) {
+            return res.status(404).json({
+                success: false,
+                message: 'No health data found'
+            });
+        }
+
+        console.log('Found health record:', healthRecord);
+
+        res.json({
+            success: true,
+            data: healthRecord
+        });
+    } catch (error) {
+        console.error('Error fetching health data:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch health data',
             error: error.message
         });
     }
