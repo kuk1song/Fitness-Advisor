@@ -64,5 +64,33 @@ export const HealthService = {
       console.error('Error fetching health data:', error);
       throw error;
     }
+  },
+
+  getHealthHistory: async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const response = await fetch(`${BASE_URL}/api/health/history`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch health history');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching health history:', error);
+      throw error;
+    }
   }
 };

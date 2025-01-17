@@ -1,91 +1,168 @@
 import express from 'express';
 import HealthRecord from '../models/HealthRecord.js';
+import HealthHistory from '../models/HealthHistory.js';
 import { authenticateToken } from '../middleware/auth.js';
+import mongoose from 'mongoose';
 
 const router = express.Router();
 
-router.post('/', authenticateToken, async (req, res) => {
-    console.log('POST health route handler called');
+// Get user health information
+router.get('/', authenticateToken, async (req, res) => {
     try {
-        console.log('Health route accessed');
-        console.log('User from token:', req.user);
-        console.log('Request body:', req.body);
+        const healthData = await HealthRecord.findOne({ userId: req.user.id });
+        res.json({ success: true, data: healthData });
+    } catch (error) {
+        console.error('Error fetching health data:', error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
 
-        // Ensure userId is obtained from the authenticated user
-        if (!req.user || !req.user._id) {
-            return res.status(400).json({
-                success: false,
-                message: 'User ID not found in token'
+// Update or create user health information
+router.post('/', authenticateToken, async (req, res) => {
+    try {
+        console.log('Received health data:', req.body);
+        
+        const existingHealth = await HealthRecord.findOne({ userId: req.user.id });
+        
+        // Get the latest version number of health history for the current user
+        const latestHistory = await HealthHistory.findOne(
+            { userId: req.user.id },
+            { 'metadata.version': 1 }
+        ).sort({ 'metadata.version': -1 });
+
+        // Calculate the new version number
+        const currentVersion = latestHistory ? 
+            parseFloat(latestHistory.metadata.version) + 1 : 
+            1.0;
+
+        if (existingHealth) {
+            // Create history record, including complete health data
+            const historyRecord = new HealthHistory({
+                userId: existingHealth.userId,
+                userEmail: existingHealth.userEmail,
+                userName: existingHealth.userName,
+                healthData: {
+                    weight: existingHealth.weight,
+                    height: existingHealth.height,
+                    age: existingHealth.age,
+                    dietType: existingHealth.dietType,
+                    activityLevel: existingHealth.activityLevel,
+                    fitnessExperience: existingHealth.fitnessExperience,
+                    mealFrequency: existingHealth.mealFrequency,
+                    sleepHours: existingHealth.sleepHours,
+                    goal: existingHealth.goal
+                },
+                metadata: {
+                    recordType: 'update',
+                    version: currentVersion.toFixed(1), 
+                    tags: [],
+                    lastUpdateTime: new Date()
+                }
+            });
+
+            console.log('Saving history record version:', currentVersion);
+            await historyRecord.save();
+
+            // (In userhealths collection)Delete old record
+            await HealthRecord.deleteOne({ userId: req.user.id });
+
+            // (In userhealths collection)Create new record
+            const newHealth = new HealthRecord({
+                userId: req.user.id,
+                userEmail: req.user.email,
+                userName: req.user.name,
+                ...req.body,
+                updatedAt: new Date()
+            });
+
+            const savedHealth = await newHealth.save();
+            console.log('Created updated health record:', savedHealth);
+            res.json({ 
+                success: true, 
+                data: savedHealth,
+                version: currentVersion.toFixed(1)
+            });
+        } else {
+            // (In healthhistorys collection)Create new record
+            const historyRecord = new HealthHistory({
+                userId: req.user.id,
+                userEmail: req.user.email,
+                userName: req.user.name,
+                healthData: req.body,
+                metadata: {
+                    recordType: 'initial',
+                    version: '1.0',  // The first record version is 1.0
+                    tags: [],
+                    lastUpdateTime: new Date()
+                }
+            });
+
+            await historyRecord.save();
+
+            const newHealth = new HealthRecord({
+                userId: req.user.id,
+                userEmail: req.user.email,
+                userName: req.user.name,
+                ...req.body
+            });
+            const savedHealth = await newHealth.save();
+            console.log('Created new health record:', savedHealth);
+            res.json({ 
+                success: true, 
+                data: savedHealth,
+                version: '1.0'
             });
         }
-
-        // Create health record, including user ID
-        const healthRecord = new HealthRecord({
-            userId: req.user._id,        // Use the ID of the authenticated user
-            userEmail: req.user.email,   // Use the email of the authenticated user
-            userName: req.user.name,     // Use the name of the authenticated user
-            weight: req.body.weight,
-            height: req.body.height,
-            age: req.body.age,
-            dietType: req.body.dietType,
-            activityLevel: req.body.activityLevel,
-            fitnessExperience: req.body.fitnessExperience,
-            mealFrequency: req.body.mealFrequency,
-            sleepHours: req.body.sleepHours,
-            goal: req.body.goal
-        });
-
-        console.log('Attempting to save health record:', healthRecord);
-
-        const savedRecord = await healthRecord.save();
-        console.log('Health record saved successfully:', savedRecord);
-
-        res.status(201).json({
-            success: true,
-            message: 'Health data successfully submitted',
-            data: savedRecord
-        });
-
     } catch (error) {
-        console.error('Error saving health data:', error);
-        res.status(500).json({
-            success: false,
-            message: '(Backend: To MongoDB) Failed to submit health data',
-            error: error.message
+        console.error('Detailed error:', error);
+        console.error('Error stack:', error.stack);
+        res.status(500).json({ 
+            success: false, 
+            message: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
 });
 
-// GET route - Get user health data
-router.get('/', authenticateToken, async (req, res) => {
-    console.log('GET health route handler called');
+// Get user health history
+router.get('/history', authenticateToken, async (req, res) => {
     try {
-        console.log('GET health route accessed');
-        console.log('User from token:', req.user);
+        console.log('Attempting to fetch health history for user:', req.user.id);
+        console.log('Available collections:', Object.keys(mongoose.connection.collections));
 
-        const healthRecord = await HealthRecord.findOne({ 
-            userId: req.user._id 
-        }).sort({ createdAt: -1 });  // Retrieve the latest record
+        const historyData = await HealthHistory.find({ 
+            userId: req.user.id 
+        }).sort({ recordDate: -1 });
+        
+        console.log('Retrieved health history:', historyData);
+        res.json({ success: true, data: historyData });
+    } catch (error) {
+        console.error('Error fetching health history:', error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
 
-        if (!healthRecord) {
-            return res.status(404).json({
-                success: false,
-                message: 'No health data found'
-            });
-        }
-
-        console.log('Found health record:', healthRecord);
+// Add a new route to get user version history
+router.get('/versions', authenticateToken, async (req, res) => {
+    try {
+        const versions = await HealthHistory.find(
+            { userId: req.user.id },
+            { 
+                'metadata.version': 1,
+                'metadata.recordType': 1,
+                'metadata.lastUpdateTime': 1,
+                recordDate: 1
+            }
+        ).sort({ 'metadata.version': -1 });
 
         res.json({
             success: true,
-            data: healthRecord
+            data: versions
         });
     } catch (error) {
-        console.error('Error fetching health data:', error);
         res.status(500).json({
             success: false,
-            message: 'Failed to fetch health data',
-            error: error.message
+            message: error.message
         });
     }
 });

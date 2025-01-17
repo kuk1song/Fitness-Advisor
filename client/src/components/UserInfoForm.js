@@ -42,7 +42,7 @@ function UserInfoForm() {
   const [step, setStep] = useState(0); // used to check which step is currently on
   const [handlingSubmit, setHandlingSubmit] = useState(false); // used to check if is currently handling submit or not...
 
-  // intialize the inputRefs
+  // Intialize the inputRefs
   const inputRefs = useRef([]);
 
   const totalSteps = Object.keys(userData).length;
@@ -55,10 +55,10 @@ function UserInfoForm() {
      setErrors({ submit: message });
    }, []);
   
-  // check if the current step is the last step
+  // Check if the current step is the last step
   const isLastStep = step === totalSteps - 1;
   
-  // load the user name
+  // Load the user name
   useEffect(() => {
     async function loadUserName() {
       const user = await AuthService.getUser();
@@ -179,7 +179,7 @@ function UserInfoForm() {
           
           if (healthData && healthData.data) {
             console.log('Setting existing data:', healthData.data); 
-            setExistingData(healthData.data);  // Directly use healthData.data
+            setExistingData(healthData.data);  // directly use healthData.data
             setIsEditing(false);
           }
         }
@@ -224,7 +224,7 @@ function UserInfoForm() {
               { key: 'sleepHours', label: 'Sleep Hours', unit: 'hours' },
               { key: 'goal', label: 'Goal' }
             ].map(({ key, label, unit }) => {
-              console.log(`Rendering field ${key}:`, existingData[key]); 
+              // console.log(`Rendering field ${key}:`, existingData[key]); 
               return (
                 <div key={key} className="info-item">
                   <label>{label}:</label>
