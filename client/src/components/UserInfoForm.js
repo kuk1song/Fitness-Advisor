@@ -246,7 +246,7 @@ function UserInfoForm() {
           >
           </button>
           <Link to="/" className="homepage-button">
-            Menu
+            Home
           </Link>
         </div>
       </>

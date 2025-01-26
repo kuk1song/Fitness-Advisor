@@ -15,7 +15,7 @@ function CalendarComponent() {
 
   return (
     <div>
-    <Link to="/" className="homepage-button">Homepage</Link>
+    <Link to="/" className="homepage-button">Home</Link>
       <h2>My Fitness Calendar</h2>
       <Calendar
         localizer={localizer}
