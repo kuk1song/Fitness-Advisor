@@ -213,26 +213,28 @@ function UserInfoForm() {
           
           <div className="health-info-container">
             {[
-              { key: 'weight', label: 'Weight', unit: 'kg' },
-              { key: 'height', label: 'Height', unit: 'cm' },
-              { key: 'age', label: 'Age', unit: 'years' },
-              { key: 'dietType', label: 'Diet Type' },
-              { key: 'activityLevel', label: 'Activity Level' },
-              { key: 'fitnessExperience', label: 'Fitness Experience' },
-              { key: 'mealFrequency', label: 'Meal Frequency' },
-              { key: 'sleepHours', label: 'Sleep Hours', unit: 'hours' },
-              { key: 'goal', label: 'Goal' }
-            ].map(({ key, label, unit }) => {
-              // console.log(`Rendering field ${key}:`, existingData[key]); 
-              return (
-                <div key={key} className="info-item">
-                  <label>{label}:</label>
-                  <span className="info-value">
-                    {existingData[key]} {unit || ''}
-                  </span>
-                </div>
-              );
-            })}
+              { key: 'weight', label: 'Weight', unit: 'kg', type: 'physical' },
+              { key: 'height', label: 'Height', unit: 'cm', type: 'physical' },
+              { key: 'age', label: 'Age', unit: 'years', type: 'physical' },
+              { key: 'dietType', label: 'Diet Type', type: 'lifestyle' },
+              { key: 'activityLevel', label: 'Activity Level', type: 'lifestyle' },
+              { key: 'fitnessExperience', label: 'Fitness Experience', type: 'lifestyle' },
+              { key: 'mealFrequency', label: 'Meal Frequency', type: 'lifestyle' },
+              { key: 'sleepHours', label: 'Sleep Hours', unit: 'hours', type: 'physical' },
+              { key: 'goal', label: 'Goal', type: 'goals' }
+            ].map(({ key, label, unit, type }, index) => (
+              <div 
+                key={key} 
+                className="info-item" 
+                data-type={type}
+                style={{"--index": index}}
+              >
+                <label>{label}</label>
+                <span className="info-value">
+                  {existingData[key]} {unit || ''}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
         
