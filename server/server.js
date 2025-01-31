@@ -7,6 +7,7 @@ import healthRoutes from './routes/health.js';
 import { authenticateToken } from './middleware/auth.js';
 import HealthRecord from './models/HealthRecord.js';
 import HealthHistory from './models/HealthHistory.js';
+import HealthVectorStore from './services/HealthVectorStore.js';
 
 dotenv.config();
 const app = express();
@@ -74,3 +75,12 @@ app.listen(PORT, () => {
     console.log('- GET  /api/health');
     console.log('- POST /api/health');
 });
+
+// Add vector database initialization after MongoDB connection
+console.log('Initializing Vector Database...');
+try {
+    await HealthVectorStore.initializeDB();
+    console.log('Vector Database initialized successfully');
+} catch (error) {
+    console.error('Vector Database initialization error:', error);
+}

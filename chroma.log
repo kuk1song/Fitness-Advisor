@@ -1,0 +1,28 @@
+[33mWARNING[0m:  [31-01-2025 00:55:51] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [31-01-2025 00:55:52] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component System
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component SqliteDB
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component Posthog
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component LocalExecutor
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component SegmentAPI
+[36mDEBUG[0m:    [31-01-2025 00:55:52] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [31-01-2025 00:55:52] Started server process [[36m69826[0m]
+[32mINFO[0m:     [31-01-2025 00:55:52] Waiting for application startup.
+[32mINFO[0m:     [31-01-2025 00:55:52] Application startup complete.
+[32mINFO[0m:     [31-01-2025 00:55:52] Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [31-01-2025 00:58:54] 127.0.0.1:52200 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [31-01-2025 00:58:54] 127.0.0.1:52205 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [31-01-2025 00:58:54] 127.0.0.1:52207 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 409
+[32mINFO[0m:     [31-01-2025 00:58:54] 127.0.0.1:52206 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [31-01-2025 00:59:02] Backing off send_request(...) for 0.1s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7ff240f44e80>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known')))
+[32mINFO[0m:     [31-01-2025 00:59:02] Backing off send_request(...) for 2.0s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7ff240f93df0>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known')))
+[32mINFO[0m:     [31-01-2025 00:59:04] Backing off send_request(...) for 3.3s (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7ff240f93610>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known')))
+[31mERROR[0m:    [31-01-2025 00:59:08] Giving up send_request(...) after 4 tries (requests.exceptions.ConnectionError: HTTPSConnectionPool(host='us.i.posthog.com', port=443): Max retries exceeded with url: /batch/ (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7ff240f93640>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known')))
+[32mINFO[0m:     [31-01-2025 01:03:01] 127.0.0.1:53482 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [31-01-2025 01:03:01] 127.0.0.1:53487 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [31-01-2025 01:03:01] 127.0.0.1:53489 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [31-01-2025 01:03:01] 127.0.0.1:53488 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200

@@ -3,6 +3,7 @@ import HealthRecord from '../models/HealthRecord.js';
 import HealthHistory from '../models/HealthHistory.js';
 import { authenticateToken } from '../middleware/auth.js';
 import mongoose from 'mongoose';
+import HealthVectorStore from '../services/HealthVectorStore.js';
 
 const router = express.Router();
 
@@ -77,10 +78,18 @@ router.post('/', authenticateToken, async (req, res) => {
 
             const savedHealth = await newHealth.save();
             console.log('Created updated health record:', savedHealth);
+
+            // Store health data to vector database
+            await HealthVectorStore.storeHealthData(req.user.id, req.body);
+
+            // Find similar cases
+            const similarProfiles = await HealthVectorStore.findSimilarProfiles(req.body);
+
             res.json({ 
                 success: true, 
                 data: savedHealth,
-                version: currentVersion.toFixed(1)
+                version: currentVersion.toFixed(1),
+                similarCases: similarProfiles
             });
         } else {
             // (In healthhistorys collection)Create new record
@@ -107,10 +116,18 @@ router.post('/', authenticateToken, async (req, res) => {
             });
             const savedHealth = await newHealth.save();
             console.log('Created new health record:', savedHealth);
+
+            // Store health data to vector database
+            await HealthVectorStore.storeHealthData(req.user.id, req.body);
+
+            // Find similar cases
+            const similarProfiles = await HealthVectorStore.findSimilarProfiles(req.body);
+
             res.json({ 
                 success: true, 
                 data: savedHealth,
-                version: '1.0'
+                version: '1.0',
+                similarCases: similarProfiles
             });
         }
     } catch (error) {
@@ -158,6 +175,63 @@ router.get('/versions', authenticateToken, async (req, res) => {
         res.json({
             success: true,
             data: versions
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
+// Embedding vector database related routes 👇
+// Get vector database statistics
+router.get('/vector-stats', authenticateToken, async (req, res) => {
+    try {
+        const stats = await HealthVectorStore.getDBStats();
+        res.json({
+            success: true,
+            data: stats
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
+// Get vector records of the current user
+router.get('/vector-records', authenticateToken, async (req, res) => {
+    try {
+        const records = await HealthVectorStore.getUserHealthRecords(req.user.id);
+        res.json({
+            success: true,
+            data: records
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
+// Admin route: Get all vector records
+router.get('/all-vector-records', authenticateToken, async (req, res) => {
+    try {
+        // Add admin check
+        if (!req.user.isAdmin) {
+            return res.status(403).json({
+                success: false,
+                message: 'Admin access required'
+            });
+        }
+
+        const records = await HealthVectorStore.getAllHealthRecords();
+        res.json({
+            success: true,
+            data: records
         });
     } catch (error) {
         res.status(500).json({
