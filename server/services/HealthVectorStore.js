@@ -63,17 +63,20 @@ class HealthVectorStore {
      */
     async storeHealthData(userId, healthData) {
         try {
-            const formattedData = this.formatHealthData(healthData);
+            console.log('Storing health data for user:', userId);
+            console.log('Health data:', healthData);
+            
+            // 转换健康数据为文本
+            const healthText = JSON.stringify(healthData);
+            
+            // 存储到 ChromaDB
             await this.collection.add({
-                ids: [userId],
-                documents: [formattedData],
-                metadatas: [{
-                    userId: userId,
-                    timestamp: new Date().toISOString(),
-                    type: 'health_record'
-                }]
+                ids: [Date.now().toString()],
+                documents: [healthText],
+                metadatas: [{ userId: userId }]
             });
-            console.log('Health data stored in vector database');
+            
+            console.log('Successfully stored health data in vector database');
         } catch (error) {
             console.error('Error storing health data:', error);
             throw error;
@@ -163,6 +166,36 @@ class HealthVectorStore {
             };
         } catch (error) {
             console.error('Error getting DB stats:', error);
+            throw error;
+        }
+    }
+
+    // 获取特定用户的向量记录
+    async getUserRecords(userId) {
+        try {
+            console.log('Fetching records for user:', userId);
+            const result = await this.collection.get({
+                where: { "userId": userId }
+            });
+            console.log('Found records:', result);
+            
+            // 格式化返回数据，使其更易读
+            const records = result.ids.map((id, index) => {
+                return {
+                    id: id,
+                    originalText: result.documents[index],
+                    metadata: result.metadatas[index],
+                    embedding: result.embeddings[index]  // 向量数据
+                };
+            });
+
+            return {
+                userId: userId,
+                recordCount: records.length,
+                records: records
+            };
+        } catch (error) {
+            console.error('Error getting user records:', error);
             throw error;
         }
     }
