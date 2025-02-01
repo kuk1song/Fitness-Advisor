@@ -124,121 +124,45 @@ class HealthVectorStore {
         `;
     }
 
-    // Get all health records
-    async getAllHealthRecords() {
+    // Get all vector records
+    async getRecords(userId = null) {
         try {
-            const result = await this.collection.get();
-            return {
-                ids: result.ids,
-                documents: result.documents,
-                metadatas: result.metadatas
-            };
-        } catch (error) {
-            console.error('Error getting health records:', error);
-            throw error;
-        }
-    }
-
-    // Get health records for a specific user
-    async getUserHealthRecords(userId) {
-        try {
-            const result = await this.collection.get({
-                where: { userId: userId }
-            });
-            return {
-                ids: result.ids,
-                documents: result.documents,
-                metadatas: result.metadatas
-            };
-        } catch (error) {
-            console.error('Error getting user health records:', error);
-            throw error;
-        }
-    }
-
-    // Get database statistics
-    async getDBStats() {
-        try {
-            const count = await this.collection.count();
-            return {
-                totalRecords: count,
-                collectionName: this.DB_NAME
-            };
-        } catch (error) {
-            console.error('Error getting DB stats:', error);
-            throw error;
-        }
-    }
-
-    // 获取特定用户的向量记录
-    async getUserRecords(userId) {
-        try {
-            console.log('Fetching records for user:', userId);
-            const result = await this.collection.get({
-                where: { "userId": userId }
-            });
-            console.log('Found records:', result);
+            console.log(userId ? `Fetching records for user: ${userId}` : 'Getting all records');
             
-            // 格式化返回数据，使其更易读
-            const records = result.ids.map((id, index) => {
-                return {
-                    id: id,
-                    originalText: result.documents[index],
-                    metadata: result.metadatas[index],
-                    embedding: result.embeddings[index]  // 向量数据
-                };
-            });
+            const query = userId ? { where: { userId } } : {};
+            const result = await this.collection.get(query);
+            
+            const records = result.ids.map((id, index) => ({
+                id: id,
+                document: result.documents[index],
+                metadata: result.metadatas[index],
+                embedding: result.embeddings ? result.embeddings[index] : null
+            }));
 
             return {
-                userId: userId,
-                recordCount: records.length,
-                records: records
+                totalRecords: records.length,
+                records: records,
+                ...(userId && { userId })
             };
         } catch (error) {
-            console.error('Error getting user records:', error);
+            console.error('Error getting records:', error);
             throw error;
         }
     }
 
-    // Get vector database statistics
+    // Get vector database stats
     async getStats() {
         try {
             console.log('Getting vector database stats');
             const result = await this.collection.get();
             
             return {
-                collectionName: this.DB_NAME, 
-                totalRecords: result.ids.length, // total number of vector records
+                collectionName: this.DB_NAME,
+                totalRecords: result.ids.length,
                 lastUpdated: new Date().toISOString()
             };
         } catch (error) {
             console.error('Error getting stats:', error);
-            throw error;
-        }
-    }
-
-    // 获取所有记录
-    async getAllRecords() {
-        try {
-            console.log('Getting all vector database records');
-            const result = await this.collection.get();
-            
-            // 格式化返回数据
-            const records = result.ids.map((id, index) => {
-                return {
-                    id: id,
-                    document: result.documents[index],
-                    metadata: result.metadatas[index],
-                    embedding: result.embeddings ? result.embeddings[index] : null
-                };
-            });
-
-            return {
-                totalRecords: records.length,
-                records: records
-            };
-        } catch (error) {
-            console.error('Error getting all records:', error);
             throw error;
         }
     }

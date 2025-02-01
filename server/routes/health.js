@@ -201,33 +201,11 @@ router.get('/vector-db/stats', authenticateToken, async (req, res) => {
     }
 });
 
-// Get all vector records (admin only)
+// Get vector records (all records for admin, user records for normal users)
 router.get('/vector-db/records', authenticateToken, async (req, res) => {
     try {
-        if (!req.user.isAdmin) {
-            return res.status(403).json({
-                success: false,
-                message: 'Admin access required'
-            });
-        }
-        const records = await HealthVectorStore.getAllRecords();
-        res.json({
-            success: true,
-            data: records
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-});
-
-// Get vector records of the current user
-router.get('/vector-db/user-records', authenticateToken, async (req, res) => {
-    try {
-        const userId = req.user.id; 
-        const records = await HealthVectorStore.getUserRecords(userId);
+        const userId = req.user.isAdmin ? null : req.user.id;
+        const records = await HealthVectorStore.getRecords(userId);
         res.json({
             success: true,
             data: records

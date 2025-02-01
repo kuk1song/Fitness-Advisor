@@ -84,3 +84,9 @@
 [32mINFO[0m:     [01-02-2025 16:19:32] 127.0.0.1:63814 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
 [32mINFO[0m:     [01-02-2025 16:19:32] 127.0.0.1:63816 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
 [32mINFO[0m:     [01-02-2025 16:19:32] 127.0.0.1:63815 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:29:22] 127.0.0.1:50550 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:29:22] 127.0.0.1:50551 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:29:22] 127.0.0.1:50552 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:29:22] 127.0.0.1:50553 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:29:49] 127.0.0.1:50684 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:29:59] 127.0.0.1:50733 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
