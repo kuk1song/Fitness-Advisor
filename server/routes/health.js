@@ -201,9 +201,15 @@ router.get('/vector-db/stats', authenticateToken, async (req, res) => {
     }
 });
 
-// Get vector records of the current user
+// Get all vector records (admin only)
 router.get('/vector-db/records', authenticateToken, async (req, res) => {
     try {
+        if (!req.user.isAdmin) {
+            return res.status(403).json({
+                success: false,
+                message: 'Admin access required'
+            });
+        }
         const records = await HealthVectorStore.getAllRecords();
         res.json({
             success: true,
@@ -217,34 +223,10 @@ router.get('/vector-db/records', authenticateToken, async (req, res) => {
     }
 });
 
-// Admin route: Get all vector records
-router.get('/all-vector-records', authenticateToken, async (req, res) => {
-    try {
-        // Add admin check
-        if (!req.user.isAdmin) {
-            return res.status(403).json({
-                success: false,
-                message: 'Admin access required'
-            });
-        }
-
-        const records = await HealthVectorStore.getAllHealthRecords();
-        res.json({
-            success: true,
-            data: records
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-});
-
-// 获取当前用户的向量记录
+// Get vector records of the current user
 router.get('/vector-db/user-records', authenticateToken, async (req, res) => {
     try {
-        const userId = req.user.id;  // 从认证token中获取用户ID
+        const userId = req.user.id; 
         const records = await HealthVectorStore.getUserRecords(userId);
         res.json({
             success: true,

@@ -199,6 +199,49 @@ class HealthVectorStore {
             throw error;
         }
     }
+
+    // Get vector database statistics
+    async getStats() {
+        try {
+            console.log('Getting vector database stats');
+            const result = await this.collection.get();
+            
+            return {
+                collectionName: this.DB_NAME, 
+                totalRecords: result.ids.length, // total number of vector records
+                lastUpdated: new Date().toISOString()
+            };
+        } catch (error) {
+            console.error('Error getting stats:', error);
+            throw error;
+        }
+    }
+
+    // 获取所有记录
+    async getAllRecords() {
+        try {
+            console.log('Getting all vector database records');
+            const result = await this.collection.get();
+            
+            // 格式化返回数据
+            const records = result.ids.map((id, index) => {
+                return {
+                    id: id,
+                    document: result.documents[index],
+                    metadata: result.metadatas[index],
+                    embedding: result.embeddings ? result.embeddings[index] : null
+                };
+            });
+
+            return {
+                totalRecords: records.length,
+                records: records
+            };
+        } catch (error) {
+            console.error('Error getting all records:', error);
+            throw error;
+        }
+    }
 }
 
 export default new HealthVectorStore();
