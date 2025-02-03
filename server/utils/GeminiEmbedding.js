@@ -10,13 +10,14 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
  * A class that provides embedding functionality using Google's Gemini API
  * @class
  */
-class GeminiEmbeddingFunction {
+class GeminiEmbedding {
     /**
-     * Initializes the GeminiEmbeddingFunction with Gemini API key
+     * Initializes the GeminiEmbedding with Gemini API key
      * @constructor
      */
     constructor() {
-        this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        this.model = genAI.getGenerativeModel({ model: "embedding-001" });
         this.documentMode = true; // Controls the task type: "retrieval_document" or "retrieval_query"
     }
 
@@ -33,7 +34,7 @@ class GeminiEmbeddingFunction {
                 "retrieval_query";
             
             // Call to embedContent API
-            const response = await this.genAI.embedContent({
+            const response = await this.model.embedContent({
                 model: "models/text-embedding-004",
                 content: input,
                 taskType: embeddingTask
@@ -45,6 +46,29 @@ class GeminiEmbeddingFunction {
             throw error;
         }
     }
+
+    // Generate embeddings for the given input text
+    async generate(texts) {
+        try {
+    
+            if (!Array.isArray(texts)) {
+                texts = [texts];
+            }
+
+            // Generate embeddings for each text
+            const embeddings = await Promise.all(
+                texts.map(async (text) => {
+                    const embedding = await this.model.embedContent(text);
+                    return embedding.embedding.values;
+                })
+            );
+
+            return embeddings;
+        } catch (error) {
+            console.error('Error generating embeddings:', error);
+            throw error;
+        }
+    }
 }
 
-export default new GeminiEmbeddingFunction();
+export default new GeminiEmbedding();

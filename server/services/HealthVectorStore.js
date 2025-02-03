@@ -66,10 +66,10 @@ class HealthVectorStore {
             console.log('Storing health data for user:', userId);
             console.log('Health data:', healthData);
             
-            // 转换健康数据为文本
+            // Convert health data to text
             const healthText = JSON.stringify(healthData);
             
-            // 存储到 ChromaDB
+            // Store to ChromaDB
             await this.collection.add({
                 ids: [Date.now().toString()],
                 documents: [healthText],
@@ -130,13 +130,16 @@ class HealthVectorStore {
             console.log(userId ? `Fetching records for user: ${userId}` : 'Getting all records');
             
             const query = userId ? { where: { userId } } : {};
-            const result = await this.collection.get(query);
+            const result = await this.collection.get({
+                ...query,
+                include: ["embeddings"] 
+            });
             
             const records = result.ids.map((id, index) => ({
                 id: id,
                 document: result.documents[index],
                 metadata: result.metadatas[index],
-                embedding: result.embeddings ? result.embeddings[index] : null
+                embedding: result.embeddings[index]  
             }));
 
             return {

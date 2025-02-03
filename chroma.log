@@ -90,3 +90,132 @@
 [32mINFO[0m:     [01-02-2025 16:29:22] 127.0.0.1:50553 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
 [32mINFO[0m:     [01-02-2025 16:29:49] 127.0.0.1:50684 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
 [32mINFO[0m:     [01-02-2025 16:29:59] 127.0.0.1:50733 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:38:45] 127.0.0.1:53040 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:38:45] 127.0.0.1:53041 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:38:45] 127.0.0.1:53043 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:38:45] 127.0.0.1:53042 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:40:26] 127.0.0.1:53511 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:40:26] 127.0.0.1:53512 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:40:26] 127.0.0.1:53513 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [01-02-2025 16:40:26] 127.0.0.1:53514 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[33mWARNING[0m:  [03-02-2025 15:52:57] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [03-02-2025 15:52:57] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component System
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component SqliteDB
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component Posthog
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component LocalExecutor
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component SegmentAPI
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [03-02-2025 15:52:57] Started server process [[36m80071[0m]
+[32mINFO[0m:     [03-02-2025 15:52:57] Waiting for application startup.
+[32mINFO[0m:     [03-02-2025 15:52:57] Application startup complete.
+[31mERROR[0m:    [03-02-2025 15:52:57] [Errno 48] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+[32mINFO[0m:     [03-02-2025 15:52:57] Waiting for application shutdown.
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component System
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component SegmentAPI
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component LocalExecutor
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component SimpleAsyncRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component Posthog
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component SqliteDB
+[36mDEBUG[0m:    [03-02-2025 15:52:57] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [03-02-2025 15:52:57] Application shutdown complete.
+[33mWARNING[0m:  [03-02-2025 15:57:04] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [03-02-2025 15:57:04] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component System
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component SqliteDB
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component Posthog
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component LocalExecutor
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component SegmentAPI
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [03-02-2025 15:57:04] Started server process [[36m80658[0m]
+[32mINFO[0m:     [03-02-2025 15:57:04] Waiting for application startup.
+[32mINFO[0m:     [03-02-2025 15:57:04] Application startup complete.
+[31mERROR[0m:    [03-02-2025 15:57:04] [Errno 48] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+[32mINFO[0m:     [03-02-2025 15:57:04] Waiting for application shutdown.
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component System
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component SegmentAPI
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component LocalExecutor
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component SimpleAsyncRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component Posthog
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component SqliteDB
+[36mDEBUG[0m:    [03-02-2025 15:57:04] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [03-02-2025 15:57:04] Application shutdown complete.
+[33mWARNING[0m:  [03-02-2025 15:58:16] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [03-02-2025 15:58:16] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component System
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component SqliteDB
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component Posthog
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component LocalExecutor
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component SegmentAPI
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [03-02-2025 15:58:16] Started server process [[36m80752[0m]
+[32mINFO[0m:     [03-02-2025 15:58:16] Waiting for application startup.
+[32mINFO[0m:     [03-02-2025 15:58:16] Application startup complete.
+[31mERROR[0m:    [03-02-2025 15:58:16] [Errno 48] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+[32mINFO[0m:     [03-02-2025 15:58:16] Waiting for application shutdown.
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component System
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component SegmentAPI
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component LocalExecutor
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component SimpleAsyncRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component Posthog
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component SqliteDB
+[36mDEBUG[0m:    [03-02-2025 15:58:16] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [03-02-2025 15:58:16] Application shutdown complete.
+[33mWARNING[0m:  [03-02-2025 15:59:05] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [03-02-2025 15:59:05] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component System
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component SqliteDB
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component Posthog
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component LocalExecutor
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component SegmentAPI
+[36mDEBUG[0m:    [03-02-2025 15:59:05] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [03-02-2025 15:59:05] Started server process [[36m81110[0m]
+[32mINFO[0m:     [03-02-2025 15:59:05] Waiting for application startup.
+[32mINFO[0m:     [03-02-2025 15:59:05] Application startup complete.
+[32mINFO[0m:     [03-02-2025 15:59:05] Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [03-02-2025 16:00:42] 127.0.0.1:54502 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:00:42] 127.0.0.1:54503 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:00:42] 127.0.0.1:54505 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:00:42] 127.0.0.1:54504 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:06:46] 127.0.0.1:55962 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:09:40] 127.0.0.1:57284 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:09:40] 127.0.0.1:57285 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:09:41] 127.0.0.1:57287 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:09:41] 127.0.0.1:57286 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[36mDEBUG[0m:    [03-02-2025 16:11:10] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [03-02-2025 16:11:10] 127.0.0.1:57703 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[33mWARNING[0m:  [03-02-2025 16:11:11] Number of requested results 3 is greater than number of elements in index 1, updating n_results = 1
+[32mINFO[0m:     [03-02-2025 16:11:11] 127.0.0.1:57710 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:11:59] 127.0.0.1:57930 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:12:26] 127.0.0.1:58043 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:52:13] 127.0.0.1:53117 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[33mWARNING[0m:  [03-02-2025 16:52:14] Number of requested results 3 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [03-02-2025 16:52:14] 127.0.0.1:53119 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:52:27] 127.0.0.1:53192 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:53:39] 127.0.0.1:53525 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:53:49] 127.0.0.1:53571 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
