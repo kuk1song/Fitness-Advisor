@@ -5,6 +5,9 @@
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * A class that provides embedding functionality using Google's Gemini API
@@ -50,19 +53,22 @@ class GeminiEmbedding {
     // Generate embeddings for the given input text
     async generate(texts) {
         try {
-    
+            console.log('=== Start generate embeddings ===');
+            console.log('Input texts:', texts);
+
             if (!Array.isArray(texts)) {
                 texts = [texts];
             }
 
-            // Generate embeddings for each text
             const embeddings = await Promise.all(
                 texts.map(async (text) => {
-                    const embedding = await this.model.embedContent(text);
-                    return embedding.embedding.values;
+                    const result = await this.model.embedContent(text);
+                    return result.embedding.values;
                 })
             );
 
+            console.log('Generated embeddings length:', embeddings.length);
+            console.log('=== End generate embeddings ===');
             return embeddings;
         } catch (error) {
             console.error('Error generating embeddings:', error);

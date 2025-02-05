@@ -204,13 +204,17 @@ router.get('/vector-db/stats', authenticateToken, async (req, res) => {
 // Get vector records (all records for admin, user records for normal users)
 router.get('/vector-db/records', authenticateToken, async (req, res) => {
     try {
-        const userId = req.user.isAdmin ? null : req.user.id;
-        const records = await HealthVectorStore.getRecords(userId);
+        console.log('\n=== Starting vector-db/records route ===');
+        console.log('User:', req.user.id);
+        
+        const records = await HealthVectorStore.getRecords(req.user.id);
+        
         res.json({
             success: true,
             data: records
         });
     } catch (error) {
+        console.error('Route error:', error);
         res.status(500).json({
             success: false,
             message: error.message

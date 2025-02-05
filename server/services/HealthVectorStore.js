@@ -63,20 +63,19 @@ class HealthVectorStore {
      */
     async storeHealthData(userId, healthData) {
         try {
-            console.log('Storing health data for user:', userId);
-            console.log('Health data:', healthData);
-            
-            // Convert health data to text
-            const healthText = JSON.stringify(healthData);
-            
-            // Store to ChromaDB
-            await this.collection.add({
+            // 1. Format data
+            const healthText = this.formatHealthData(healthData);
+            console.log('Formatted health text:', healthText);
+
+            // 2. Store to ChromaDB (automatically call embedFunction.generate)
+            const result = await this.collection.add({
                 ids: [Date.now().toString()],
                 documents: [healthText],
                 metadatas: [{ userId: userId }]
             });
-            
-            console.log('Successfully stored health data in vector database');
+
+            console.log('Stored data with embeddings:', result);
+            return true;
         } catch (error) {
             console.error('Error storing health data:', error);
             throw error;
@@ -108,7 +107,7 @@ class HealthVectorStore {
         }
     }
 
-    // Format health data as text
+    // Formatting
     formatHealthData(healthData) {
         return `
             User Health Profile:
@@ -127,32 +126,65 @@ class HealthVectorStore {
     // Get all vector records
     async getRecords(userId = null) {
         try {
-            console.log(userId ? `Fetching records for user: ${userId}` : 'Getting all records');
+            console.log('\n=== Start getRecords (New Version) ===');
+            console.log('Requested for userId:', userId);
             
-            const query = userId ? { where: { userId } } : {};
-            const result = await this.collection.get({
-                ...query,
-                include: ["embeddings"] 
-            });
+            // 1. Basic connection check
+            const heartbeat = await this.client.heartbeat();
+            console.log('ChromaDB connected, heartbeat:', heartbeat);
             
-            const records = result.ids.map((id, index) => ({
-                id: id,
-                document: result.documents[index],
-                metadata: result.metadatas[index],
-                embedding: result.embeddings[index]  
-            }));
-
-            return {
+            // 2. Get all records - do not use any conditions
+            console.log('Fetching all records without conditions...');
+            const result = await this.collection.get();
+            console.log('Initial fetch complete');
+            
+            // 3. Verify the results
+            if (!result || !result.ids || !result.ids.length) {
+                console.log('No records found in collection');
+                return {
+                    totalRecords: 0,
+                    records: [],
+                    ...(userId && { userId })
+                };
+            }
+            
+            console.log(`Found ${result.ids.length} total records`);
+            
+            // 4. Build record structure
+            let records = [];
+            for (let i = 0; i < result.ids.length; i++) {
+                records.push({
+                    id: result.ids[i],
+                    document: result.documents[i],
+                    metadata: result.metadatas[i]
+                });
+            }
+            
+            // 5. Filter user records, if needed
+            if (userId) {
+                console.log('Filtering records for user:', userId);
+                records = records.filter(record => 
+                    record.metadata && record.metadata.userId === userId
+                );
+                console.log(`Found ${records.length} records for user`);
+            }
+            
+            // 6. Return results
+            const response = {
                 totalRecords: records.length,
-                records: records,
+                records,
                 ...(userId && { userId })
             };
+            
+            console.log('=== getRecords completed successfully ===\n');
+            return response;
+            
         } catch (error) {
-            console.error('Error getting records:', error);
-            throw error;
+            console.error('Error in getRecords:', error);
+            throw new Error(`Failed to get records: ${error.message}`);
         }
     }
-
+    
     // Get vector database stats
     async getStats() {
         try {

@@ -219,3 +219,203 @@
 [32mINFO[0m:     [03-02-2025 16:52:27] 127.0.0.1:53192 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
 [32mINFO[0m:     [03-02-2025 16:53:39] 127.0.0.1:53525 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
 [32mINFO[0m:     [03-02-2025 16:53:49] 127.0.0.1:53571 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 16:59:48] 127.0.0.1:55622 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:00:17] 127.0.0.1:55757 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[32mINFO[0m:     [03-02-2025 17:00:18] 127.0.0.1:55759 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:00:25] 127.0.0.1:55797 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:04:28] 127.0.0.1:56886 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:04:28] 127.0.0.1:56887 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:04:28] 127.0.0.1:56889 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:04:28] 127.0.0.1:56888 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:04:43] 127.0.0.1:56971 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:05:01] 127.0.0.1:57062 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:05:25] 127.0.0.1:57182 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:06:11] 127.0.0.1:57403 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:06:49] 127.0.0.1:57595 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:07:35] 127.0.0.1:57690 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:07:46] 127.0.0.1:57708 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:11:36] 127.0.0.1:58815 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:12:58] 127.0.0.1:59194 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:13:43] 127.0.0.1:59392 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [03-02-2025 17:13:54] 127.0.0.1:59440 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:20:34] 127.0.0.1:60537 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:21:19] 127.0.0.1:60752 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:24:10] 127.0.0.1:61549 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:24:10] 127.0.0.1:61550 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:24:10] 127.0.0.1:61552 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:24:10] 127.0.0.1:61551 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:24:38] 127.0.0.1:61697 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[33mWARNING[0m:  [04-02-2025 14:27:57] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [04-02-2025 14:27:57] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component System
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component SqliteDB
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component Posthog
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component LocalExecutor
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component SegmentAPI
+[36mDEBUG[0m:    [04-02-2025 14:27:57] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [04-02-2025 14:27:58] Started server process [[36m87637[0m]
+[32mINFO[0m:     [04-02-2025 14:27:58] Waiting for application startup.
+[32mINFO[0m:     [04-02-2025 14:27:58] Application startup complete.
+[31mERROR[0m:    [04-02-2025 14:27:58] [Errno 48] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+[32mINFO[0m:     [04-02-2025 14:27:58] Waiting for application shutdown.
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component System
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component SegmentAPI
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component LocalExecutor
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component SimpleAsyncRateLimitEnforcer
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component Posthog
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component SqliteDB
+[36mDEBUG[0m:    [04-02-2025 14:27:58] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [04-02-2025 14:27:58] Application shutdown complete.
+[33mWARNING[0m:  [04-02-2025 14:28:38] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [04-02-2025 14:28:38] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component System
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component SqliteDB
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component Posthog
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component LocalExecutor
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component SegmentAPI
+[36mDEBUG[0m:    [04-02-2025 14:28:38] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [04-02-2025 14:28:38] Started server process [[36m87709[0m]
+[32mINFO[0m:     [04-02-2025 14:28:38] Waiting for application startup.
+[32mINFO[0m:     [04-02-2025 14:28:38] Application startup complete.
+[32mINFO[0m:     [04-02-2025 14:28:38] Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[36mDEBUG[0m:    [04-02-2025 14:28:59] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [04-02-2025 14:28:59] 127.0.0.1:63387 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:29:39] 127.0.0.1:63566 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:29:39] 127.0.0.1:63567 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:29:39] 127.0.0.1:63569 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:29:39] 127.0.0.1:63568 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:29:55] 127.0.0.1:63647 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:31:06] 127.0.0.1:63954 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:31:13] 127.0.0.1:63986 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:31:53] 127.0.0.1:64177 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:34:30] 127.0.0.1:64865 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:34:36] 127.0.0.1:64896 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:36:21] 127.0.0.1:65348 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:37:02] 127.0.0.1:65531 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:38:40] 127.0.0.1:49589 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[32mINFO[0m:     [04-02-2025 14:38:41] 127.0.0.1:49592 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:40:10] 127.0.0.1:50044 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:40:19] 127.0.0.1:50090 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:40:26] 127.0.0.1:50133 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:41:31] 127.0.0.1:50431 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[32mINFO[0m:     [04-02-2025 14:41:32] 127.0.0.1:50433 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:44:33] 127.0.0.1:51809 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[32mINFO[0m:     [04-02-2025 14:44:34] 127.0.0.1:51815 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:45:37] 127.0.0.1:52092 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:47:27] 127.0.0.1:52580 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:47:27] 127.0.0.1:52581 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:47:27] 127.0.0.1:52583 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:47:27] 127.0.0.1:52582 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:48:09] 127.0.0.1:52791 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[32mINFO[0m:     [04-02-2025 14:48:10] 127.0.0.1:52797 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:49:30] 127.0.0.1:53159 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:49:30] 127.0.0.1:53160 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:50:40] 127.0.0.1:53464 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:50:49] 127.0.0.1:53513 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:50:49] 127.0.0.1:53514 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:51:40] 127.0.0.1:53732 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[32mINFO[0m:     [04-02-2025 14:51:40] 127.0.0.1:53738 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:52:38] 127.0.0.1:54006 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 14:52:38] 127.0.0.1:54007 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:00:31] 127.0.0.1:56650 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:00:31] 127.0.0.1:56651 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:01:45] 127.0.0.1:56976 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:01:45] 127.0.0.1:56977 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:04:33] 127.0.0.1:57719 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:04:33] 127.0.0.1:57720 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:06:08] 127.0.0.1:58139 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:06:08] 127.0.0.1:58140 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:06:59] 127.0.0.1:58368 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [04-02-2025 15:06:59] 127.0.0.1:58369 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 00:37:47] 127.0.0.1:59285 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 00:37:47] 127.0.0.1:59286 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 00:37:56] 127.0.0.1:59329 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 00:38:07] 127.0.0.1:59381 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 00:38:14] 127.0.0.1:59415 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 00:38:14] 127.0.0.1:59416 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:24:26] 127.0.0.1:56926 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:24:26] 127.0.0.1:56927 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:27:37] 127.0.0.1:57762 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:27:37] 127.0.0.1:57763 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:27:46] 127.0.0.1:57806 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:27:46] 127.0.0.1:57807 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:28:23] 127.0.0.1:57968 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:28:23] 127.0.0.1:57969 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:28:23] 127.0.0.1:57971 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:28:23] 127.0.0.1:57970 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:28:50] 127.0.0.1:58111 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:28:55] 127.0.0.1:58138 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:28:55] 127.0.0.1:58139 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:29:33] 127.0.0.1:58302 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:29:33] 127.0.0.1:58303 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:30:40] 127.0.0.1:58590 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:30:40] 127.0.0.1:58591 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:30:40] 127.0.0.1:58593 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:30:40] 127.0.0.1:58592 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:30:46] 127.0.0.1:58635 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:30:46] 127.0.0.1:58636 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:31:39] 127.0.0.1:59406 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:31:39] 127.0.0.1:59407 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:32:07] 127.0.0.1:59533 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:32:07] 127.0.0.1:59534 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:36:20] 127.0.0.1:60621 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:36:20] 127.0.0.1:60622 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:36:20] 127.0.0.1:60624 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:36:20] 127.0.0.1:60623 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:36:27] 127.0.0.1:60667 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:36:27] 127.0.0.1:60668 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:43:18] 127.0.0.1:62451 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:43:18] 127.0.0.1:62452 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:54:15] 127.0.0.1:49499 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:54:15] 127.0.0.1:49500 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:54:15] 127.0.0.1:49502 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:54:15] 127.0.0.1:49501 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:55:59] 127.0.0.1:49955 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:56:06] 127.0.0.1:49988 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:56:06] 127.0.0.1:49989 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:56:36] 127.0.0.1:50140 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:56:37] 127.0.0.1:50141 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:59:35] 127.0.0.1:50924 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 01:59:36] 127.0.0.1:50925 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:00:06] 127.0.0.1:51057 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:00:06] 127.0.0.1:51058 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:00:06] 127.0.0.1:51059 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:00:06] 127.0.0.1:51060 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:00:13] 127.0.0.1:51097 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:00:13] 127.0.0.1:51098 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:01:25] 127.0.0.1:51610 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:01:25] 127.0.0.1:51611 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:02:33] 127.0.0.1:52247 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:02:33] 127.0.0.1:52248 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:02:33] 127.0.0.1:52250 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:02:33] 127.0.0.1:52249 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:02:44] 127.0.0.1:52309 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:02:50] 127.0.0.1:52338 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:02:50] 127.0.0.1:52339 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:03:12] 127.0.0.1:52439 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:03:12] 127.0.0.1:52440 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:04:29] 127.0.0.1:52767 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:04:29] 127.0.0.1:52768 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:05:33] 127.0.0.1:53036 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:05:33] 127.0.0.1:53037 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:05:33] 127.0.0.1:53039 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:05:33] 127.0.0.1:53038 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:06:07] 127.0.0.1:53206 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:06:07] 127.0.0.1:53207 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:08:14] 127.0.0.1:53773 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:08:14] 127.0.0.1:53774 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:08:14] 127.0.0.1:53776 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:08:14] 127.0.0.1:53775 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:08:22] 127.0.0.1:53818 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [05-02-2025 02:08:22] 127.0.0.1:53819 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
