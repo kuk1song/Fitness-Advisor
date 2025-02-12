@@ -71,12 +71,7 @@ class HealthVectorStore {
             
             // 2. Generating embedding
             const embedding = await this.embedFunction.generate(healthText);
-            console.log('Embedding details:', {
-                exists: !!embedding,
-                type: typeof embedding,
-                isArray: Array.isArray(embedding),
-                length: embedding?.length
-            });
+            console.log('Embedding generated:', !!embedding); // Ture of False
             
             // 3. Store to the ChromaDB
             const id = Date.now().toString();
@@ -99,7 +94,8 @@ class HealthVectorStore {
             console.log('Storage verification:', {
                 id: id,
                 success: !!stored,
-                hasEmbeddings: !!stored?.embeddings
+                hasEmbeddings: !!stored?.embeddings,
+                sample_fiest_3: embedding ? embedding.slice(0, 3) : null,  // Only the first three numbers are displayed
             });
             
             if (!stored || !stored.embeddings) {
