@@ -63,21 +63,47 @@ class HealthVectorStore {
      */
     async storeHealthData(userId, healthData) {
         try {
-            // 1. Format data
+            console.log('=== 3. Start storing health data ===');
+            
+            // 1. Formatting data
             const healthText = this.formatHealthData(healthData);
-            console.log('Formatted health text:', healthText);
-
-            // 2. Store to ChromaDB (automatically call embedFunction.generate)
-            const result = await this.collection.add({
-                ids: [Date.now().toString()],
+            console.log('Formatted text:', healthText);
+            
+            // 2. Generating embedding
+            const embedding = await this.embedFunction.generate(healthText);
+            console.log('Embedding generated:', !!embedding);
+            
+            // 3. Store to the ChromaDB
+            const id = Date.now().toString();
+            await this.collection.add({
+                ids: [id],
                 documents: [healthText],
-                metadatas: [{ userId: userId }]
+                metadatas: [{
+                    userId: userId,
+                    timestamp: Date.now()
+                }],
+                embeddings: embedding
             });
-
-            console.log('Stored data with embeddings:', result);
+            
+            // 4. Verify that the storage was successful
+            const stored = await this.collection.get({
+                ids: [id],
+                include: ["embeddings"]
+            });
+            
+            console.log('Storage verification:', {
+                id: id,
+                success: !!stored,
+                hasEmbeddings: !!stored?.embeddings
+            });
+            
+            if (!stored || !stored.embeddings) {
+                throw new Error('Failed to verify storage');
+            }
+            
             return true;
         } catch (error) {
-            console.error('Error storing health data:', error);
+            console.error('Error in storeHealthData:', error);
             throw error;
         }
     }
@@ -126,7 +152,7 @@ class HealthVectorStore {
     // Get all vector records
     async getRecords(userId = null) {
         try {
-            console.log('\n=== Start getRecords (New Version) ===');
+            console.log('\n=== 2. Start getRecords (New Version) ===');
             console.log('Requested for userId:', userId);
             
             // 1. Basic connection check
@@ -156,7 +182,7 @@ class HealthVectorStore {
                 records.push({
                     id: result.ids[i],
                     document: result.documents[i],
-                    metadata: result.metadatas[i]
+                    metadata: result.metadatas[i],
                 });
             }
             
@@ -176,7 +202,7 @@ class HealthVectorStore {
                 ...(userId && { userId })
             };
             
-            console.log('=== getRecords completed successfully ===\n');
+            console.log('=== 2. getRecords completed successfully ===\n');
             return response;
             
         } catch (error) {

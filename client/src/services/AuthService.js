@@ -10,7 +10,7 @@ export const AuthService = {
         },
         body: JSON.stringify(userData),
       });
-
+      
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Registration failed');
@@ -41,7 +41,7 @@ export const AuthService = {
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token); // Store token
+      localStorage.setItem('token', data.token); // Store token in loacal
       localStorage.setItem('user', JSON.stringify(data.user));
 
       return data;
@@ -55,7 +55,7 @@ export const AuthService = {
   getUser: async () => {
     try {
       const token = localStorage.getItem('token');
-      console.log('Using token:', token); 
+      // console.log('Using token:', token); 
 
       if (!token) {
         throw new Error('No token found');
@@ -75,7 +75,7 @@ export const AuthService = {
       }
 
       const data = await response.json();
-      console.log('User data received:', data); 
+      console.log('User data received(AuthService):', data); 
       return data;
     } catch (error) {
       console.error('Detailed error:', error);

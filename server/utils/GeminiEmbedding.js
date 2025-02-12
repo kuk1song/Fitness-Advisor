@@ -53,7 +53,7 @@ class GeminiEmbedding {
     // Generate embeddings for the given input text
     async generate(texts) {
         try {
-            console.log('=== Start generate embeddings ===');
+            console.log('=== 4. Start generate embeddings(GeminiEmbedding) ===');
             console.log('Input texts:', texts);
 
             if (!Array.isArray(texts)) {
@@ -68,10 +68,9 @@ class GeminiEmbedding {
             );
 
             console.log('Generated embeddings length:', embeddings.length);
-            console.log('=== End generate embeddings ===');
             return embeddings;
         } catch (error) {
-            console.error('Error generating embeddings:', error);
+            console.error('Error in GeminiEmbedding class:', error);
             throw error;
         }
     }

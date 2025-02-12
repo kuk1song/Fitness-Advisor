@@ -169,16 +169,16 @@ function UserInfoForm() {
       try {
         setLoading(true);
         const userData = await AuthService.getUser();
-        console.log('User data loaded:', userData);
+        console.log('User data loaded(UserInforForm):', userData);
         
         if (userData && userData.user) {
           setUserName(userData.user.name);
           
           const healthData = await HealthService.getUserHealth();
-          console.log('Health data loaded:', healthData);
+          console.log('Health data loaded(UserInforForm):', healthData);
           
           if (healthData && healthData.data) {
-            console.log('Setting existing data:', healthData.data); 
+            // console.log('Setting existing data(UserInforForm):', healthData.data); 
             setExistingData(healthData.data);  // directly use healthData.data
             setIsEditing(false);
           }
@@ -204,7 +204,7 @@ function UserInfoForm() {
 
   // Display the existing data
   if (existingData && !isEditing) {
-    console.log('Rendering with existing data:', existingData); 
+    // console.log('Rendering with existing data:', existingData); 
     return (
       <>
         <div className="bg bg-dataform"></div>

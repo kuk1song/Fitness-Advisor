@@ -75,11 +75,12 @@ router.post('/', authenticateToken, async (req, res) => {
                 ...req.body,
                 updatedAt: new Date()
             });
-
+            
+            // MongoDB storage
             const savedHealth = await newHealth.save();
             console.log('Created updated health record:', savedHealth);
 
-            // Store health data to vector database
+            // ChromaDB stoarage(Store health data to vector database)
             await HealthVectorStore.storeHealthData(req.user.id, req.body);
 
             // Find similar cases
@@ -204,7 +205,7 @@ router.get('/vector-db/stats', authenticateToken, async (req, res) => {
 // Get vector records (all records for admin, user records for normal users)
 router.get('/vector-db/records', authenticateToken, async (req, res) => {
     try {
-        console.log('\n=== Starting vector-db/records route ===');
+        console.log('\n=== 1. Starting vector-db/records route ===');
         console.log('User:', req.user.id);
         
         const records = await HealthVectorStore.getRecords(req.user.id);
