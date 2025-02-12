@@ -126,11 +126,13 @@ class HealthVectorStore {
                 nResults: limit
             });
 
-            return {
-                documents: results.documents[0],  // All similar documents(limit)
-                count: results.documents[0].length,
-                distances: results.distances?.[0],  // Similarity distance
-            };
+            return results.documents[0];
+
+            // return {
+            //     documents: results.documents[0],  // All similar documents(limit)
+            //     count: results.documents[0].length,
+            //     distances: results.distances?.[0],  // Similarity distance
+            // };
         } catch (error) {
             console.error('Error finding similar profiles:', error);
             throw error;

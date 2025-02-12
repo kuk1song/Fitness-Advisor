@@ -4,8 +4,51 @@ import HealthHistory from '../models/HealthHistory.js';
 import { authenticateToken } from '../middleware/auth.js';
 import mongoose from 'mongoose';
 import HealthVectorStore from '../services/HealthVectorStore.js';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const router = express.Router();
+
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// RAG 
+async function generateHealthAdvice(goal, similarProfiles) {
+    try {
+        console.log('=== Generating Health Advice ===');
+        console.log('Goal:', goal);
+        console.log('Similar profiles count:', similarProfiles.length);
+        
+        // Augmented generation: Answer the question¶
+        const prompt = `You are a professional health and fitness advisor. Based on the user's profile and goal, create a detailed one-week plan.
+Please provide specific, actionable advice that is safe and appropriate for the user's fitness level.
+
+USER PROFILE:
+${similarProfiles.map(profile => profile.trim()).join('\n')}
+
+SIMILAR CASES FOR REFERENCE:
+${similarProfiles.map(profile => profile.trim()).join('\n')}
+
+Please provide:
+1. A brief overview of the plan
+2. Daily workout schedule for one week
+3. Meal planning suggestions
+4. Sleep and recovery recommendations
+5. Progress tracking tips
+
+Format the response in a clear, easy-to-follow structure.`;
+
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const result = await model.generateContent(prompt);
+        const advice = result.response.text();
+
+        console.log('Advice generated successfully');
+        return advice;
+
+    } catch (error) {
+        console.error('Error generating health advice:', error);
+        throw error;
+    }
+}
 
 // Get user health information
 router.get('/', authenticateToken, async (req, res) => {
@@ -85,12 +128,17 @@ router.post('/', authenticateToken, async (req, res) => {
 
             // Find similar cases
             const similarProfiles = await HealthVectorStore.findSimilarProfiles(req.body);
+            const healthAdvice = await generateHealthAdvice(req.body.goal, similarProfiles);
+
+            console.log("similarProfiles", similarProfiles);
+            console.log("healthAdvice", healthAdvice);
 
             res.json({ 
                 success: true, 
                 data: savedHealth,
                 version: currentVersion.toFixed(1),
-                similarCases: similarProfiles
+                similarCases: similarProfiles,
+                healthAdvice
             });
         } else {
             // (In healthhistorys collection)Create new record
@@ -123,17 +171,18 @@ router.post('/', authenticateToken, async (req, res) => {
 
             // Find similar cases
             const similarProfiles = await HealthVectorStore.findSimilarProfiles(req.body);
+            const healthAdvice = await generateHealthAdvice(req.body.goal, similarProfiles);
 
             res.json({ 
                 success: true, 
                 data: savedHealth,
                 version: '1.0',
-                similarCases: similarProfiles
+                similarCases: similarProfiles,
+                healthAdvice
             });
         }
     } catch (error) {
-        console.error('Detailed error:', error);
-        console.error('Error stack:', error.stack);
+        console.error('Error:', error);
         res.status(500).json({ 
             success: false, 
             message: error.message,
