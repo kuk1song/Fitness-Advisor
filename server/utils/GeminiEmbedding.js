@@ -1,5 +1,5 @@
 /* 
- * This file is a class that uses Gemini API(embedContent) to generate embeddings.
+ * This file contains a class that uses Gemini API(embedContent) to generate embeddings.
  * embedContent: is a text embedding method provided by Google Gemini API, 
  * which is used to convert text into a vector.
  */
@@ -9,10 +9,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-/**
- * A class that provides embedding functionality using Google's Gemini API
- * @class
- */
 class GeminiEmbedding {
     /**
      * Initializes the GeminiEmbedding with Gemini API key
@@ -20,41 +16,41 @@ class GeminiEmbedding {
      */
     constructor() {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        this.model = genAI.getGenerativeModel({ model: "embedding-001" });
-        this.documentMode = true; // Controls the task type: "retrieval_document" or "retrieval_query"
+        this.model = genAI.getGenerativeModel({ model: "text-embedding-004"});
+        // this.documentMode = true; // Controls the task type: "retrieval_document" or "retrieval_query"
     }
 
-    /**
-     * Generates embeddings for the given input text
-     * @param {string} input - The text to generate embeddings for
-     * @returns {Promise<number[]>} A promise that resolves to an array of embedding values
-     * @throws {Error} If embedding generation fails
-     */
-    async __call__(input) {
-        try {
-            const embeddingTask = this.documentMode ? 
-                "retrieval_document" : 
-                "retrieval_query";
+    // /**
+    //  * Internal method: actually perform the embedding conversion
+    //  * @param {string} input - The text to generate embeddings
+    //  * @returns {Promise<number[]>} A promise that resolves to an array of embedding values
+    //  * @throws {Error} If embedding generation fails
+    //  */
+    // async __call__(input) {
+    //     try {
+    //         const embeddingTask = this.documentMode ? 
+    //             "retrieval_document" : // User input health info without goal
+    //             "retrieval_query"; // Goal(last step) by the user input
             
-            // Call to embedContent API
-            const response = await this.model.embedContent({
-                model: "models/text-embedding-004",
-                content: input,
-                taskType: embeddingTask
-            });
+    //         // Call to embedContent API
+    //         const response = await this.model.embedContent({
+    //             model: "models/text-embedding-004",
+    //             content: input,
+    //             taskType: embeddingTask
+    //         });
 
-            return response.embedding;
-        } catch (error) {
-            console.error('Embedding generation error:', error);
-            throw error;
-        }
-    }
+    //         return response.embedding;
+    //     } catch (error) {
+    //         console.error('Embedding generation error:', error);
+    //         throw error;
+    //     }
+    // }
 
-    // Generate embeddings for the given input text
+    // Public method(packaging method)
     async generate(texts) {
         try {
             console.log('=== 4. Start generate embeddings(GeminiEmbedding) ===');
-            console.log('Input texts:', texts);
+            // console.log('Input texts:', texts);
 
             if (!Array.isArray(texts)) {
                 texts = [texts];
@@ -67,13 +63,22 @@ class GeminiEmbedding {
                 })
             );
 
+            //  calling __call__
+            // const embeddings = await this.__call__(texts);
+
             console.log('Generated embeddings length:', embeddings.length);
             return embeddings;
         } catch (error) {
-            console.error('Error in GeminiEmbedding class:', error);
+            console.error('Error in GeminiEmbedding:', error);
             throw error;
         }
     }
 }
 
 export default new GeminiEmbedding();
+
+// HealthVectorStore
+// → calls generate()
+// → calls __call__()
+//     → calls Gemini API
+//         → returns embeddings

@@ -71,7 +71,12 @@ class HealthVectorStore {
             
             // 2. Generating embedding
             const embedding = await this.embedFunction.generate(healthText);
-            console.log('Embedding generated:', !!embedding);
+            console.log('Embedding details:', {
+                exists: !!embedding,
+                type: typeof embedding,
+                isArray: Array.isArray(embedding),
+                length: embedding?.length
+            });
             
             // 3. Store to the ChromaDB
             const id = Date.now().toString();
