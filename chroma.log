@@ -624,3 +624,84 @@
 [32mINFO[0m:     [12-02-2025 19:08:07] 127.0.0.1:53243 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
 [32mINFO[0m:     [12-02-2025 19:08:07] 127.0.0.1:53244 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
 [32mINFO[0m:     [12-02-2025 19:08:07] 127.0.0.1:53246 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 19:09:19] 127.0.0.1:53603 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 19:09:20] 127.0.0.1:53604 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 20:59:26] 127.0.0.1:51019 - "GET /api/v2/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 20:59:26] 127.0.0.1:51020 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:20:22] 127.0.0.1:60875 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:20:22] 127.0.0.1:60876 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:20:22] 127.0.0.1:60878 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:20:22] 127.0.0.1:60877 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:20:45] 127.0.0.1:61018 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 400
+[32mINFO[0m:     [12-02-2025 22:27:18] 127.0.0.1:63781 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:27:18] 127.0.0.1:63782 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:27:18] 127.0.0.1:63784 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:27:18] 127.0.0.1:63783 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:27:47] 127.0.0.1:63940 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 500
+[33mWARNING[0m:  [12-02-2025 22:30:47] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-02-2025 22:30:48] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component System
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component SqliteDB
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component Posthog
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component SegmentAPI
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [12-02-2025 22:30:48] Started server process [[36m29723[0m]
+[32mINFO[0m:     [12-02-2025 22:30:48] Waiting for application startup.
+[32mINFO[0m:     [12-02-2025 22:30:48] Application startup complete.
+[31mERROR[0m:    [12-02-2025 22:30:48] [Errno 48] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+[32mINFO[0m:     [12-02-2025 22:30:48] Waiting for application shutdown.
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component System
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component SegmentAPI
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component LocalExecutor
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component SimpleAsyncRateLimitEnforcer
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component Posthog
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component SqliteDB
+[36mDEBUG[0m:    [12-02-2025 22:30:48] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [12-02-2025 22:30:48] Application shutdown complete.
+[33mWARNING[0m:  [12-02-2025 22:31:23] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-02-2025 22:31:23] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component System
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component SqliteDB
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component Posthog
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component SegmentAPI
+[36mDEBUG[0m:    [12-02-2025 22:31:23] Starting component SimpleAsyncRateLimitEnforcer
+[32mINFO[0m:     [12-02-2025 22:31:23] Started server process [[36m29794[0m]
+[32mINFO[0m:     [12-02-2025 22:31:23] Waiting for application startup.
+[32mINFO[0m:     [12-02-2025 22:31:23] Application startup complete.
+[32mINFO[0m:     [12-02-2025 22:31:23] Uvicorn running on [1mhttp://0.0.0.0:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [12-02-2025 22:31:56] 127.0.0.1:65201 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:31:56] 127.0.0.1:65202 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:31:56] 127.0.0.1:65204 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:31:56] 127.0.0.1:65203 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[36mDEBUG[0m:    [12-02-2025 22:32:27] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [12-02-2025 22:32:27] 127.0.0.1:65394 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 500
+[32mINFO[0m:     [12-02-2025 22:47:13] 127.0.0.1:54290 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:47:13] 127.0.0.1:54291 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:47:13] 127.0.0.1:54293 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:47:13] 127.0.0.1:54292 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:47:45] 127.0.0.1:54476 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 500
+[32mINFO[0m:     [12-02-2025 22:53:44] 127.0.0.1:56399 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:53:44] 127.0.0.1:56400 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:53:44] 127.0.0.1:56402 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:53:44] 127.0.0.1:56401 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 22:54:24] 127.0.0.1:56636 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 500
+[32mINFO[0m:     [12-02-2025 23:01:09] 127.0.0.1:59460 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 23:01:09] 127.0.0.1:59461 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 23:01:10] 127.0.0.1:59463 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 23:01:10] 127.0.0.1:59462 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/health_records_db HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 23:01:44] 127.0.0.1:59667 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/add HTTP/1.1" 201
+[32mINFO[0m:     [12-02-2025 23:01:44] 127.0.0.1:59668 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/get HTTP/1.1" 200
+[32mINFO[0m:     [12-02-2025 23:01:45] 127.0.0.1:59671 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bd474bb8-88ba-4924-a3ce-5839be014d82/query HTTP/1.1" 200

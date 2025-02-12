@@ -1,6 +1,5 @@
 /* 
- * This file create and manage a vector database(Chroma). In other words, 
- * store the vectors generated in the GeminiEmbedding.js file in Chroma.
+ * This file create and manage a vector database(Chroma). 
  * 
  * Chroma: is an open source vector database for storing, indexing, 
  * and searching vector.
@@ -66,7 +65,7 @@ class HealthVectorStore {
             console.log('=== 3. Start storing health data ===');
             
             // 1. Formatting data
-            const healthText = this.formatHealthData(healthData);
+            const healthText = this.formatHealthData(healthData, false);
             console.log('Formatted text:', healthText);
             
             // 2. Generating embedding
@@ -95,7 +94,7 @@ class HealthVectorStore {
                 id: id,
                 success: !!stored,
                 hasEmbeddings: !!stored?.embeddings,
-                sample_fiest_3: embedding ? embedding.slice(0, 3) : null,  // Only the first three numbers are displayed
+                firstThreeSamples: embedding ? embedding.slice(0, 3) : null,  // Only the first three numbers are displayed
             });
             
             if (!stored || !stored.embeddings) {
@@ -111,21 +110,27 @@ class HealthVectorStore {
 
     /**
      * Finds similar health profiles
-     * @param {Object} healthData - The health data to compare
+     * @param {Object} healthData 
      * @param {number} limit - Maximum number of results
      * @returns {Promise<Array>} Similar health profiles
      */
     async findSimilarProfiles(healthData, limit = 3) {
         try {
+            console.log('=== Finding similar profiles ===');
+
             this.embedFunction.documentMode = false; // Switch to query mode
-            const queryText = this.formatHealthData(healthData);
+            const queryText = `Goal: ${healthData.goal}`;
             
             const results = await this.collection.query({
                 queryTexts: [queryText],
                 nResults: limit
             });
 
-            return results.documents[0]; // Return the most similar documents
+            return {
+                documents: results.documents[0],  // All similar documents(limit)
+                count: results.documents[0].length,
+                distances: results.distances?.[0],  // Similarity distance
+            };
         } catch (error) {
             console.error('Error finding similar profiles:', error);
             throw error;
@@ -135,26 +140,34 @@ class HealthVectorStore {
     }
 
     // Formatting
-    formatHealthData(healthData) {
-        return `
-            User Health Profile:
-            Weight: ${healthData.weight}kg
-            Height: ${healthData.height}cm
-            Age: ${healthData.age}
-            Diet Type: ${healthData.dietType}
-            Activity Level: ${healthData.activityLevel}
-            Fitness Experience: ${healthData.fitnessExperience}
-            Meal Frequency: ${healthData.mealFrequency}
-            Sleep Hours: ${healthData.sleepHours}
-            Goal: ${healthData.goal}
-        `;
-    }
+    formatHealthData(data, includeGoal = true) {
+        try {
+            const baseProfile = `
+                User Health Profile:
+                Weight: ${data.weight}kg
+                Height: ${data.height}cm
+                Age: ${data.age}
+                Diet Type: ${data.dietType}
+                Activity Level: ${data.activityLevel}
+                Fitness Experience: ${data.fitnessExperience}
+                Meal Frequency: ${data.mealFrequency}
+                Sleep Hours: ${data.sleepHours}
+            `.trim();
 
+            // Select whether the return contains the goal(query) as needed
+            return includeGoal ? 
+                `${baseProfile}\nGoal: ${data.goal}` : 
+                baseProfile;
+        } catch (error) {
+            console.error('Error formatting health data:', error);
+            throw error;
+        }
+    }
     // Get all vector records
     async getRecords(userId = null) {
         try {
-            console.log('\n=== 2. Start getRecords (New Version) ===');
-            console.log('Requested for userId:', userId);
+            console.log('\n=== 2. Start getRecords ===');
+            // console.log('Requested for userId:', userId);
             
             // 1. Basic connection check
             const heartbeat = await this.client.heartbeat();
