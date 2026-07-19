@@ -25,3 +25,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+# local vector store artifacts
+chroma_data/
+chroma.log
